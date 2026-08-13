@@ -1,0 +1,170 @@
+%% ============================================================
+%%  HOUSE STYLE — single point of control
+%%  Edit this file to restyle every document that inputs it.
+%%  Documents use:  \input{house}
+%%  (the build script puts this directory on TEXINPUTS, so no path needed)
+%% ============================================================
+
+
+%% ---- FONT --------------------------------------------------
+%% Requires LuaLaTeX (the build script uses it by default). fontspec loads OTF
+%% files directly, so changing font never touches MiKTeX/TeX Live font maps.
+%%
+%% Source Sans 3 ships with this skill in style/fonts/. The build script puts
+%% that directory on OPENTYPEFONTS, which is what makes the lookup below work on
+%% a machine where the font was never installed. Build through the script and the
+%% font resolves anywhere; build by hand and you need it on the system.
+%% (Extension=.otf means fontspec looks the file up by NAME through kpathsea, so
+%% OPENTYPEFONTS is the variable that counts here, not OSFONTDIR.)
+%%
+%% To change the house font, edit \setmainfont below. Options:
+%%   Source Sans 3   -> SourceSans3      (current, bundled)
+%%   TeX Gyre Heros  -> texgyreheros     Helvetica clone, in every TeX distro
+%%   TeX Gyre Pagella-> texgyrepagella   serif, in every TeX distro
+%%   Any system-installed font by name: \setmainfont{Segoe UI}  (drop Extension)
+%%
+%% Weight tip: Source Sans 3 Semibold reads better than Bold in dense tables.
+%% Swap BoldFont to *-Semibold if the bold feels heavy.
+\usepackage{fontspec}
+\setmainfont{SourceSans3}[
+  Extension      = .otf,
+  UprightFont    = *-Regular,
+  BoldFont       = *-Semibold,
+  ItalicFont     = *-RegularIt,
+  BoldItalicFont = *-SemiboldIt,
+]
+\setsansfont{SourceSans3}[
+  Extension      = .otf,
+  UprightFont    = *-Regular,
+  BoldFont       = *-Semibold,
+  ItalicFont     = *-RegularIt,
+  BoldItalicFont = *-SemiboldIt,
+]
+
+%% Slightly tighter line spacing suits sans faces
+\linespread{1.04}
+
+
+%% ---- COLOURS -----------------------------------------------
+\usepackage[table]{xcolor}
+
+\definecolor{ink}{HTML}{1A1A1A}        % body text
+\definecolor{muted}{HTML}{6E6E6E}      % secondary text
+\definecolor{accent}{HTML}{B22222}     % the one loud colour
+\definecolor{rulegrey}{HTML}{DDDDDD}   % rules, gridlines
+
+% row shading
+\definecolor{restbg}{HTML}{F4F4F4}
+\definecolor{gymbg}{HTML}{EEF2F7}
+\definecolor{racebg}{HTML}{FBEFEF}
+
+% phase palette (training docs)
+\definecolor{p0}{HTML}{8C8C8C}
+\definecolor{p1}{HTML}{2E7D9A}
+\definecolor{p2}{HTML}{2F8F4E}
+\definecolor{p3}{HTML}{C77F1A}
+\definecolor{p4}{HTML}{B22222}
+
+
+%% ---- PACKAGES ----------------------------------------------
+%% NOTE: geometry is deliberately NOT loaded here — margins differ
+%% per document (portrait vs landscape). Set it in the document.
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{amssymb}
+\usepackage[normalem]{ulem}   % \sout{} strikethrough; normalem keeps \emph italic
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage[most]{tcolorbox}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+
+%% ---- TYPOGRAPHY --------------------------------------------
+\color{ink}
+\setlength{\parindent}{0pt}
+\renewcommand{\arraystretch}{1.18}
+
+\titleformat{\section}{\normalsize\bfseries}{}{0pt}{}
+\titlespacing*{\section}{0pt}{7pt}{3pt}
+
+% booktabs rules, a touch lighter than default
+\setlength{\heavyrulewidth}{0.9pt}
+\setlength{\lightrulewidth}{0.4pt}
+
+
+%% ---- MACROS ------------------------------------------------
+
+% Checkbox
+\newcommand{\cb}{$\square$}
+
+% Small colour chip, e.g. \pdot{p2}
+\newcommand{\pdot}[1]{\textcolor{#1}{$\blacksquare$}}
+
+% Page footer: \housefoot{left text}{right text}
+\newcommand{\housefoot}[2]{%
+  \pagestyle{fancy}%
+  \fancyhf{}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \fancyfoot[L]{\footnotesize\color{muted} #1}%
+  \fancyfoot[R]{\footnotesize\color{muted} #2}%
+}
+
+% Document title block: \housetitle{Title}{Subtitle}
+\newcommand{\housetitle}[2]{%
+  {\LARGE\bfseries #1}\\[2pt]%
+  {\color{muted}\large #2}%
+  \vspace{4pt}%
+  {\color{rulegrey}\hrule height 1.2pt}%
+  \vspace{8pt}%
+}
+
+% Title with subtitle pushed right instead of below
+\newcommand{\housetitlewide}[2]{%
+  {\LARGE\bfseries #1}\hfill{\color{muted}\normalsize #2}%
+  \vspace{3pt}%
+  {\color{rulegrey}\hrule height 1.2pt}%
+  \vspace{6pt}%
+}
+
+% Callout box: \housebox{content}
+\newenvironment{housebox}
+  {\begin{tcolorbox}[colback=white,colframe=accent,boxrule=1pt,arc=2pt,
+     left=8pt,right=8pt,top=6pt,bottom=6pt]}
+  {\end{tcolorbox}}
+
+% Small muted note paragraph
+\newcommand{\housenote}[1]{{\footnotesize\color{muted} #1}}
+
+
+%% ---- LINKS & BOOKMARKS -------------------------------------
+%% Loaded last on purpose: hyperref must come after almost everything.
+%% Packages that must load AFTER it (imakeidx, cleveref) go in the
+%% document's own style file, which inputs this one first.
+\definecolor{linkcol}{HTML}{2E5A8A}
+
+\usepackage[
+  unicode,
+  colorlinks=true,
+  linkcolor=linkcol,          % internal: TOC, index, cross-refs
+  urlcolor=linkcol,
+  citecolor=linkcol,
+  bookmarks=true,
+  bookmarksnumbered=true,
+  bookmarksopen=true,
+  bookmarksopenlevel=0,       % chapters visible, sections folded
+  pdfdisplaydoctitle=true,
+  pdfpagemode=UseOutlines,    % open the bookmark pane by default
+]{hyperref}
+
+%% For a print-first document, swap colorlinks=true for hidelinks:
+%% links stay clickable on screen but render as plain black on paper.
+
+%% PDF metadata: \housemeta{Title}{Author}{Subject}
+\newcommand{\housemeta}[3]{\hypersetup{pdftitle={#1},pdfauthor={#2},pdfsubject={#3}}}
+
+%% Use before \addcontentsline for starred headings, so the bookmark
+%% points at the right page instead of the previous one.
+\newcommand{\housetoc}[2]{\phantomsection\addcontentsline{toc}{#1}{#2}}

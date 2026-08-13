@@ -1,0 +1,22 @@
+{
+  "name": "invisionsoft",
+  "owner": {
+    "name": "Gerhard Combrinck",
+    "url": "https://github.com/GerhardCombrinck"
+  },
+  "metadata": {
+    "description": "Claude Code skills from Invisionsoft.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "latex",
+      "source": "./plugins/latex",
+      "description": "Compile LaTeX to PDF with a shared house style. Ships its own fonts, runs on Windows (MiKTeX) and macOS/Linux (TeX Live/MacTeX).",
+      "version": "1.0.0",
+      "author": { "name": "Gerhard Combrinck" },
+      "keywords": ["latex", "pdf", "lualatex", "typesetting", "documents"],
+      "category": "productivity"
+    }
+  ]
+}

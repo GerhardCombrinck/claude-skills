@@ -1,0 +1,18 @@
+# LaTeX build leftovers, in case anyone compiles inside the repo
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.idx
+*.ilg
+*.ind
+
+# OS noise
+.DS_Store
+Thumbs.db
+desktop.ini

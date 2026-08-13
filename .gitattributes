@@ -1,0 +1,7 @@
+* text=auto
+
+# Must stay LF or the shebang breaks when a Windows clone is used under Git Bash / WSL
+*.sh text eol=lf
+
+*.otf binary
+*.pdf binary
