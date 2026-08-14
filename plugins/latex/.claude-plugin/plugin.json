@@ -1,7 +1,7 @@
 {
   "name": "latex",
   "description": "Compile LaTeX documents to PDF with a shared house style (Source Sans 3, muted palette, booktabs tables). Fonts ship with the plugin, so a fresh TeX install needs no font setup.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": { "name": "Gerhard Combrinck" },
   "homepage": "https://github.com/GerhardCombrinck/claude-skills",
   "license": "MIT",

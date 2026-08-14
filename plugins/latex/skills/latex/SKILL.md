@@ -26,7 +26,8 @@ Prints `OK mydoc.pdf 257 KB 1 page(s)` and deletes aux files. On failure it prin
 `!` error lines and the `l.NNN` locations, and leaves the log in place.
 
 Flags: `-KeepAux` / `--keep-aux` (keep .aux/.log), `-Twice` / `--twice` (force two
-passes for `\ref`/TOC), `-Engine` / `--engine` `xelatex|pdflatex` (default `lualatex`).
+passes for `\ref`/TOC), `-SyncTeX` / `--synctex` (emit and keep `.synctex.gz` for editor
+source ↔ PDF navigation), `-Engine` / `--engine` `xelatex|pdflatex` (default `lualatex`).
 
 **Always build through this script.** It sets `TEXINPUTS` so `\input{house}` resolves,
 sets `OPENTYPEFONTS` so the bundled fonts resolve without being installed, and picks the

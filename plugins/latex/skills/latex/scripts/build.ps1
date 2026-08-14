@@ -18,6 +18,9 @@ param(
     # Force a second pass (needed for \ref, \tableofcontents, some tikz externalise)
     [switch]$Twice,
 
+    # Emit .synctex.gz and keep it, so an editor can jump between source and PDF
+    [switch]$SyncTeX,
+
     # Engine override. Default lualatex — house.tex uses fontspec/OTF.
     [ValidateSet('lualatex','xelatex','pdflatex')]
     [string]$Engine = 'lualatex'
@@ -73,6 +76,7 @@ try {
     # --enable-installer is MiKTeX-only; TeX Live errors on the unknown flag.
     $extra = @()
     if (Test-Path (Join-Path $MiktexBin 'miktex.exe')) { $extra += '--enable-installer' }
+    if ($SyncTeX) { $extra += '-synctex=1' }
 
     $passes = if ($Twice) { 2 } else { 1 }
 
@@ -116,7 +120,11 @@ try {
     }
 
     if (-not $KeepAux) {
-        foreach ($ext in 'aux','log','out','toc','lof','lot','nav','snm','synctex.gz','fls','fdb_latexmk','idx','ilg','ind') {
+        # .synctex.gz is the one aux file worth keeping when asked for: deleting it is
+        # what breaks double-click navigation between the PDF and the source.
+        $junk = 'aux','log','out','toc','lof','lot','nav','snm','fls','fdb_latexmk','idx','ilg','ind'
+        if (-not $SyncTeX) { $junk += 'synctex.gz' }
+        foreach ($ext in $junk) {
             Remove-Item (Join-Path $workDir "$base.$ext") -ErrorAction SilentlyContinue
         }
         # multi-file documents leave one .aux per \input'd file

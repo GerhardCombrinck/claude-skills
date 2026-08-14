@@ -5,6 +5,7 @@
 #   ./build.sh week02_running.tex
 #   ./build.sh ~/path/doc.tex --keep-aux
 #   ./build.sh doc.tex --engine xelatex
+#   ./build.sh doc.tex --synctex          # for editor source <-> PDF navigation
 #
 # macOS/Linux counterpart of build.ps1. Same flags, same output.
 
@@ -13,12 +14,14 @@ set -euo pipefail
 TEXFILE=""
 KEEP_AUX=0
 TWICE=0
+SYNCTEX=0
 ENGINE="lualatex"
 
 while [ $# -gt 0 ]; do
   case "$1" in
     --keep-aux) KEEP_AUX=1; shift ;;
     --twice)    TWICE=1; shift ;;
+    --synctex)  SYNCTEX=1; shift ;;
     --engine)   ENGINE="$2"; shift 2 ;;
     -h|--help)  sed -n '2,10p' "$0"; exit 0 ;;
     -*)         echo "unknown flag: $1" >&2; exit 2 ;;
@@ -26,7 +29,7 @@ while [ $# -gt 0 ]; do
   esac
 done
 
-[ -n "$TEXFILE" ] || { echo "usage: build.sh <file.tex> [--keep-aux] [--twice] [--engine ENGINE]" >&2; exit 2; }
+[ -n "$TEXFILE" ] || { echo "usage: build.sh <file.tex> [--keep-aux] [--twice] [--synctex] [--engine ENGINE]" >&2; exit 2; }
 
 case "$ENGINE" in
   lualatex|xelatex|pdflatex) ;;
@@ -94,6 +97,7 @@ cd "$WORK_DIR"
 # --enable-installer is MiKTeX-only; TeX Live rejects the unknown flag.
 EXTRA=()
 if command -v miktex >/dev/null 2>&1; then EXTRA+=(--enable-installer); fi
+if [ "$SYNCTEX" -eq 1 ]; then EXTRA+=(-synctex=1); fi
 
 run_tex() {
   "$TEXBIN" -interaction=nonstopmode -halt-on-error "${EXTRA[@]+"${EXTRA[@]}"}" "$BASE.tex" >/dev/null 2>&1
@@ -132,7 +136,11 @@ if [ "$CODE" -ne 0 ]; then
 fi
 
 if [ "$KEEP_AUX" -eq 0 ]; then
-  for ext in aux log out toc lof lot nav snm synctex.gz fls fdb_latexmk idx ilg ind; do
+  # .synctex.gz is the one aux file worth keeping when asked for: deleting it is
+  # what breaks double-click navigation between the PDF and the source.
+  JUNK="aux log out toc lof lot nav snm fls fdb_latexmk idx ilg ind"
+  [ "$SYNCTEX" -eq 0 ] && JUNK="$JUNK synctex.gz"
+  for ext in $JUNK; do
     rm -f "$WORK_DIR/$BASE.$ext"
   done
   # multi-file documents leave one .aux per \input'd file

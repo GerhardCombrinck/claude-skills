@@ -13,7 +13,7 @@
       "name": "latex",
       "source": "./plugins/latex",
       "description": "Compile LaTeX to PDF with a shared house style. Ships its own fonts, runs on Windows (MiKTeX) and macOS/Linux (TeX Live/MacTeX).",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "author": { "name": "Gerhard Combrinck" },
       "keywords": ["latex", "pdf", "lualatex", "typesetting", "documents"],
       "category": "productivity"

@@ -40,7 +40,7 @@ echo "$skill"
 |---|---|
 | Name | `House LuaLaTeX` |
 | Program | `powershell.exe` |
-| Arguments | `-NoProfile`, `-ExecutionPolicy`, `Bypass`, `-File`, `<skill>\scripts\build.ps1`, `$fullname` |
+| Arguments | `-NoProfile`, `-ExecutionPolicy`, `Bypass`, `-File`, `<skill>\scripts\build.ps1`, `$fullname`, `-SyncTeX` |
 | View PDF after running | ✔ |
 
 Each argument goes on **its own line** in the arguments list — TeXworks does not split a
@@ -54,9 +54,10 @@ plugin update only means re-pointing this one path.
 If PowerShell refuses to run the script, that is machine execution policy, not the
 plugin. `-ExecutionPolicy Bypass` above already covers it for this invocation.
 
-**Trade-off:** the script deletes aux files after every successful build, so SyncTeX
-reverse-search (double-click PDF → jump to source) will not work. If you want SyncTeX,
-use Option B instead, or add `-KeepAux` as another argument line.
+`-SyncTeX` is what makes double-click navigation work in both directions between the PDF
+and the source. Without it the script deletes `.synctex.gz` along with the rest of the
+aux files and the jump silently does nothing. Drop that argument if you would rather the
+build leave no trace at all next to your document.
 
 ## Option B — set the environment variables permanently
 
