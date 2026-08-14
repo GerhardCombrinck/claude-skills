@@ -42,7 +42,12 @@ then on `PATH`, then `/Library/TeX/texbin` on macOS.
 Set `geometry` yourself (margins differ per document), then `\input{house}`.
 Do **not** re-declare packages or colours the house style already provides.
 
+Start every document with the `% !TeX program` line. It costs nothing when building
+through the script, and it stops a GUI editor or Overleaf from trying pdfLaTeX, which
+cannot load fontspec.
+
 ```latex
+% !TeX program = lualatex
 \documentclass[11pt,a4paper]{article}
 \usepackage[margin=13mm,top=11mm,bottom=12mm]{geometry}
 \input{house}
@@ -118,6 +123,14 @@ belongs in `house.tex`.
 Useful pattern for a book that grows: define a `\photoplate{path}{caption}` macro that
 renders a dashed placeholder showing the awaited filename when the image is missing, so
 the document always compiles before the photos exist.
+
+## Building from a GUI editor
+
+TeXworks, TeXstudio and VS Code launch LuaLaTeX with a bare environment, so
+`\input{house}` fails and every house macro comes back undefined. See
+[EDITORS.md](EDITORS.md) for the TeXworks setup (and the VS Code and Overleaf
+equivalents). Short version: point the editor's typesetting tool at
+`scripts/build.ps1` rather than at `lualatex`.
 
 ## Details
 

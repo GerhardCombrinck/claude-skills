@@ -41,6 +41,8 @@ What you get:
   every document restyles.
 - **`style/fonts/`** — Source Sans 3 ships with the plugin, so there is no font install
   step on a new machine.
+- **`EDITORS.md`** — wiring the house style into TeXworks, VS Code or Overleaf, which
+  otherwise launch LuaLaTeX with a bare environment and cannot find `house.tex`.
 
 **Requirements:** a TeX distribution with LuaLaTeX.
 

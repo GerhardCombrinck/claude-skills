@@ -127,8 +127,10 @@ try {
     $info  = Get-Item $pdf
     $pages = 0
     try {
-        # crude but dependency-free page count
-        $raw   = [IO.File]::ReadAllText($pdf, [Text.Encoding]::Latin1)
+        # crude but dependency-free page count. GetEncoding(28591) is latin-1 and
+        # exists on both Windows PowerShell 5.1 and PowerShell 7 — [Text.Encoding]::Latin1
+        # is PS7-only and silently costs the page count when TeXworks calls powershell.exe.
+        $raw   = [IO.File]::ReadAllText($pdf, [Text.Encoding]::GetEncoding(28591))
         $pages = ([regex]::Matches($raw, '/Type\s*/Page[^s]')).Count
     } catch { }
 

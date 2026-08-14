@@ -137,7 +137,8 @@ so it reads as a form to write in rather than a table to read.
 | `Undefined control sequence` at `\end{tabularx}` | a macro inside the table isn't defined — usually `\newline` in an `l`/`c`/`r` column, or a missing package | change the column to `p{}`/`X`; check amssymb/xcolor are from house.tex |
 | `\rowcolor` undefined | plain `xcolor` loaded somewhere before house.tex | remove it; house.tex loads `[table]{xcolor}` |
 | `Option clash for package xcolor` | document loads xcolor itself | delete that line, house.tex owns it |
-| `File 'house.tex' not found` | not building through the build script | use the script, or set `TEXINPUTS` to the style dir |
+| `File 'house.tex' not found` | not building through the build script — usually a GUI editor calling `lualatex` directly | see [EDITORS.md](EDITORS.md); use the script, or set `TEXINPUTS` to the style dir |
+| `house.tex not found` on a document that built fine last week | the plugin updated, so the version directory in a hardcoded `TEXINPUTS` moved | re-run the setup in [EDITORS.md](EDITORS.md) |
 | `The font "SourceSans3" cannot be found` | not building through the build script, so `OPENTYPEFONTS` is unset and the font is not installed | use the script, or set `OPENTYPEFONTS` to `style/fonts` |
 | `Package fontspec Error: The fontspec package requires either XeTeX or LuaTeX` | built with `-Engine pdflatex` | drop the flag; default lualatex is correct |
 | `Font ...-tlf-t1--base not found` / `miktex-makemf did not succeed` | a pdflatex-era font package with an unregistered map | not fixable via `initexmf --mkmaps` or `miktex fontmaps configure` — use fontspec/OTF instead |
