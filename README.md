@@ -91,11 +91,22 @@ Flags on both scripts: `-KeepAux` / `--keep-aux`, `-Twice` / `--twice`,
 
 **Requirements:** a TeX distribution with LuaLaTeX.
 
-| OS | Install |
-|---|---|
-| Windows | `winget install MiKTeX.MiKTeX --scope user` |
-| macOS | `brew install --cask mactex-no-gui` |
-| Debian/Ubuntu | `apt install texlive-luatex texlive-latex-extra texlive-fonts-extra` |
+| OS | Install | Editor |
+|---|---|---|
+| Windows | `winget install MiKTeX.MiKTeX --scope user` | TeXworks, bundled |
+| macOS | `brew install --cask mactex-no-gui` | none — the full `mactex` cask adds TeXShop |
+| Debian/Ubuntu | `apt install texlive-luatex texlive-latex-extra texlive-fonts-extra` | `apt install texworks` |
+
+**On Windows, use TeXworks.** MiKTeX installs it alongside the engine, so there is
+nothing extra to download, and [`EDITORS.md`](plugins/gc-skills/skills/latex/EDITORS.md)
+wires the house style into it in two minutes — a build tool that calls the script, and
+LuaLaTeX as the default engine. That is the setup this skill is written against.
+
+A bare TeXworks launches LuaLaTeX with an empty environment and cannot find `house.tex`
+or the bundled fonts, which is exactly what the EDITORS.md setup fixes. VS Code with
+LaTeX Workshop is covered there as well. Overleaf cannot run the skill as-is — there is
+no way to set `OPENTYPEFONTS` — so it needs the upload workaround documented at the end
+of that file.
 
 The build script finds the engine on `PATH`, in the default MiKTeX user install, or in
 `/Library/TeX/texbin`. If yours lives elsewhere, set `LATEX_BIN` to that directory.
