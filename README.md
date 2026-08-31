@@ -31,18 +31,18 @@ To update later, refresh the marketplace and then the plugin:
 
 ## What it looks like
 
-Two example documents live in [`examples/`](examples/) — a one-pager and a long document,
-both built with nothing but the house style.
+Three example documents live in [`examples/`](examples/), built with nothing but the
+house style. Every screenshot below opens the PDF it came from, hosted at
+[gerhardcombrinck.github.io/claude-skills](https://gerhardcombrinck.github.io/claude-skills/).
 
 <p align="center">
-  <a href="examples/onepager.pdf"><img src="docs/images/onepager.png" width="32%" alt="One-page checklist: title block, accent-framed callout, two booktabs tables with shaded rows and status chips, and a small flowchart"></a>
-  <a href="examples/report.pdf"><img src="docs/images/report-page1.png" width="32%" alt="Report page one: chapter heading, note and warning callouts, a reference table, and a captioned flowchart"></a>
-  <a href="examples/report.pdf"><img src="docs/images/report-page2.png" width="32%" alt="Report page two: aligned diagram boxes, a maths node, cross-references, and a reference table"></a>
+  <a href="https://gerhardcombrinck.github.io/claude-skills/examples/onepager.pdf"><img src="docs/images/onepager.png" width="32%" alt="One-page checklist: title block, accent-framed callout, two booktabs tables with shaded rows and status chips, and a small flowchart"></a>
+  <a href="https://gerhardcombrinck.github.io/claude-skills/examples/report.pdf"><img src="docs/images/report-page1.png" width="32%" alt="Report page one: chapter heading, note and warning callouts, a reference table, and a captioned flowchart"></a>
+  <a href="https://gerhardcombrinck.github.io/claude-skills/examples/report.pdf"><img src="docs/images/report-page2.png" width="32%" alt="Report page two: aligned diagram boxes, a maths node, cross-references, and a reference table"></a>
 </p>
 
-Click either image to open the PDF —
-**[onepager.pdf](examples/onepager.pdf)** (1 page) ·
-**[report.pdf](examples/report.pdf)** (2 pages).
+**[onepager.pdf](https://gerhardcombrinck.github.io/claude-skills/examples/onepager.pdf)** (1 page) ·
+**[report.pdf](https://gerhardcombrinck.github.io/claude-skills/examples/report.pdf)** (2 pages)
 
 Left: [`examples/onepager.tex`](examples/onepager.tex) — article class, one page.
 Middle and right: [`examples/report.tex`](examples/report.tex) — report class, chapters,
@@ -57,12 +57,12 @@ chapters and three appendices (the last of them a glossary), seven TikZ diagrams
 resolved cross-references throughout.
 
 <p align="center">
-  <a href="examples/manual/shipping-manual.pdf"><img src="docs/images/manual-title.png" width="32%" alt="Manual title page: rule, title, subtitle, and a metadata table"></a>
-  <a href="examples/manual/shipping-manual.pdf"><img src="docs/images/manual-diagram.png" width="32%" alt="Chapter opening page with a six-step flowchart built from the diagram kit"></a>
-  <a href="examples/manual/shipping-manual.pdf"><img src="docs/images/manual-tables.png" width="32%" alt="Worked-example page: two itemised booktabs tables with money columns and inline arithmetic"></a>
+  <a href="https://gerhardcombrinck.github.io/claude-skills/examples/manual/shipping-manual.pdf"><img src="docs/images/manual-title.png" width="32%" alt="Manual title page: rule, title, subtitle, and a metadata table"></a>
+  <a href="https://gerhardcombrinck.github.io/claude-skills/examples/manual/shipping-manual.pdf"><img src="docs/images/manual-diagram.png" width="32%" alt="Chapter opening page with a six-step flowchart built from the diagram kit"></a>
+  <a href="https://gerhardcombrinck.github.io/claude-skills/examples/manual/shipping-manual.pdf"><img src="docs/images/manual-tables.png" width="32%" alt="Worked-example page: two itemised booktabs tables with money columns and inline arithmetic"></a>
 </p>
 
-**[Open the full 38-page PDF](examples/manual/shipping-manual.pdf)** — or click any page above.
+**[Open the full 38-page PDF](https://gerhardcombrinck.github.io/claude-skills/examples/manual/shipping-manual.pdf)** — or click any page above.
 
 It shows the two things a long document needs beyond what `house.tex` ships, and both
 are done in the document rather than by editing the shared style:
