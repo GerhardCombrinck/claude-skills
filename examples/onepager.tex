@@ -1,0 +1,95 @@
+% !TeX program = lualatex
+%
+% One-pager example. Article class, tight margins, everything on one page.
+% This is the shape most documents out of the skill take: a title block,
+% one thing that matters, a table, and a footer.
+%
+% Build:  ../plugins/gc-skills/skills/latex/scripts/build.ps1 onepager.tex
+%         ../plugins/gc-skills/skills/latex/scripts/build.sh  onepager.tex
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=16mm,top=14mm,bottom=15mm]{geometry}
+\input{house}
+
+\housemeta{Site Handover Checklist}{Gerhard Combrinck}{Example one-pager}
+\housefoot{Site handover \textbullet\ Unit 14B}{Rev 3 \textbullet\ Page \thepage}
+
+\begin{document}
+
+\housetitlewide{Site Handover Checklist}{Unit 14B \textbullet\ 12 March}
+
+\begin{housebox}
+Nothing signs off until every row in \textbf{Safety} is ticked and both meter
+readings are photographed. Everything else can carry over to the snag list.
+\end{housebox}
+
+\section*{Safety}
+
+\begin{tabularx}{\linewidth}{@{}l X l c@{}}
+\toprule
+\textbf{Ref} & \textbf{Item} & \textbf{Owner} & \textbf{\cb} \\
+\midrule
+\rowcolor{gymbg}
+S-01 & Distribution board labelled and earthed        & Electrical & \cb \\
+S-02 & Emergency lighting tested under load           & Electrical & \cb \\
+\rowcolor{gymbg}
+S-03 & Fire doors close and latch unaided             & Building   & \cb \\
+S-04 & Extinguishers in date, brackets fixed          & Building   & \cb \\
+\bottomrule
+\end{tabularx}
+
+\section*{Services}
+
+\begin{tabularx}{\linewidth}{@{}l X l r@{}}
+\toprule
+\textbf{Ref} & \textbf{Item} & \textbf{Status} & \textbf{Reading} \\
+\midrule
+\rowcolor{gymbg}
+V-01 & Electricity meter, photographed  & \pdot{p2} Done    & 41\,208 kWh \\
+V-02 & Water meter, photographed        & \pdot{p2} Done    & 1\,932 k\ell \\
+\rowcolor{gymbg}
+V-03 & Fibre handover, line tested      & \pdot{p3} Partial & 92 Mbps \\
+V-04 & HVAC commissioning certificate   & \pdot{p4} Missing & --- \\
+\bottomrule
+\end{tabularx}
+
+\housenote{Status chips: \pdot{p2} done \quad \pdot{p3} partial \quad
+\pdot{p4} blocked \quad \pdot{p0} not started.}
+
+\section*{Snag routing}
+
+\begin{center}
+\begin{tikzpicture}[node distance=7mm and 13mm]
+  \node[dgterm=36mm]                    (log)  {Snag logged};
+  \node[dgask=38mm, right=of log]       (safe) {Safety related?};
+  \node[dgterm=36mm, right=of safe]     (stop) {Hold handover};
+  \node[dgbox=36mm, below=11mm of safe] (list) {Add to snag list};
+
+  \draw[dgflow] (log) -- (safe);
+  \draw[dgflow] (safe) -- (stop) node[dgtag, pos=0.5] {yes};
+  \draw[dgflow] (safe) -- (list) node[dgtag, pos=0.5] {no};
+\end{tikzpicture}
+\end{center}
+
+\section*{Sign-off}
+
+\begin{tabularx}{\linewidth}{@{}L{3.4cm} X L{4.5cm} L{2.4cm}@{}}
+\toprule
+\textbf{Role} & \textbf{Name} & \textbf{Signature} & \textbf{Date} \\
+\midrule
+Contractor & \rule{0pt}{9mm} & & \\
+Client     & \rule{0pt}{9mm} & & \\
+Witness    & \rule{0pt}{9mm} & & \\
+\bottomrule
+\end{tabularx}
+
+\section*{Notes}
+
+\housenote{Anything raised on the walk-through that is not a numbered snag.}
+
+\vspace{2pt}
+{\color{rulegrey}\hrule height 0.4pt}\vspace{7mm}
+{\color{rulegrey}\hrule height 0.4pt}\vspace{7mm}
+{\color{rulegrey}\hrule height 0.4pt}
+
+\end{document}

@@ -1,0 +1,147 @@
+% !TeX program = lualatex
+%
+% Long-document example. Report class, so \chapter exists and the guarded
+% chapter styling in house.tex switches on. Exercises the callouts, the
+% figure/caption pairing, the diagram kit and cross-referencing.
+%
+% Build:  ../plugins/gc-skills/skills/latex/scripts/build.ps1 report.tex -Twice
+%         ../plugins/gc-skills/skills/latex/scripts/build.sh  report.tex --twice
+
+\documentclass[11pt,a4paper,oneside]{report}
+\usepackage[margin=2.6cm,top=2.4cm,bottom=2.6cm]{geometry}
+\input{house}
+
+\housemeta{House Style Reference}{Gerhard Combrinck}{Example long document}
+\housefoot{House style reference}{Page \thepage}
+\setlength{\parskip}{5pt}
+
+\begin{document}
+
+\chapter{Structure}
+
+A report-class document gets the chapter heading above: the label in the accent
+colour, the title in the body face at display size. Nothing needs setting per
+document.
+
+\begin{houseinfo}
+Use \texttt{houseinfo} for rationale and context --- the paragraph a reader can
+skip without losing the thread. Grey, quiet, no urgency.
+\end{houseinfo}
+
+\begin{housewarn}[The expensive mistake]
+Use \texttt{housewarn} for the thing that costs money if it is missed. The
+optional argument overrides the default title.
+\end{housewarn}
+
+\begin{housebox}
+And \texttt{housebox} stays the loud accent-framed box for the one thing that
+matters on the page. One per page, at most.
+\end{housebox}
+
+\section{Reference tables}
+
+Narrow fixed-width columns use the \texttt{L} column type, which is ragged
+right. Justified text in a 4\,cm column produces rivers of whitespace.
+
+\begin{center}
+\begin{tabular}{@{}L{5.0cm}L{4.4cm}r@{}}
+\toprule
+\textbf{Setting} & \textbf{Key} & \textbf{Default} \\
+\midrule
+\rowcolor{gymbg}
+Row shading is one macro   & \texttt{some\_option\_key} & 100.00 \\
+Ragged right, no rivers    & \texttt{another\_key}      & 250.00 \\
+\rowcolor{gymbg}
+Booktabs rules only        & \texttt{third\_key}        & 12.50 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Diagrams}
+
+Three node styles, two edge styles. Branch labels mask the line underneath.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=8mm and 14mm]
+  \node[dgterm=44mm]                    (in)   {What comes in};
+  \node[dgask=44mm, below=of in]         (ask)  {Is the thing true?};
+  \node[dgbox=42mm, right=of ask]        (side) {Do the side thing};
+  \node[dgterm=44mm, below=17mm of ask]  (out)  {The result};
+
+  \draw[dgflow] (in) -- (ask);
+  \draw[dgflow] (ask) -- (side) node[dgtag, pos=0.5] {yes};
+  \draw[dgflow] (ask) -- (out)  node[dgtag, pos=0.5] {no};
+  \draw[dgflow] (side.south) -- ++(0,-5mm) -| ([xshift=15mm]out.north);
+\end{tikzpicture}
+\caption{Caption styling, the float pin, and every diagram style at once.}
+\label{fig:flow}
+\end{figure}
+
+Figures are pinned with \texttt{[H]}. A diagram that drifts two pages away from
+the paragraph explaining it is worse than a slightly short page.
+
+\section{Alignment}
+
+Boxes in a row are anchored by their top-left corners rather than centred, so
+the tops align even when one box wraps onto extra lines and hangs lower.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+  \node[dgbox=29mm, anchor=north] (b1) at (0,0)
+    {\textbf{One}\\[1pt]{\itshape short}};
+  \node[dgbox=29mm, anchor=north west] (b2) at ([xshift=4mm]b1.north east)
+    {\textbf{Two}\\[1pt]{\itshape rather more text here so it wraps onto
+     extra lines}};
+  \node[dgbox=29mm, anchor=north west] (b3) at ([xshift=4mm]b2.north east)
+    {\textbf{Three}\\[1pt]{\itshape short}};
+  \node[dgask=40mm, above=11mm of b2] (top) {Which one?};
+  \draw[dgflow] (top.south) -- ++(0,-4mm) -| (b1.north);
+  \draw[dgflow] (top.south) -- ++(0,-4mm) -| (b2.north);
+  \draw[dgflow] (top.south) -- ++(0,-4mm) -| (b3.north);
+\end{tikzpicture}
+\caption{Tops align; the taller box hangs lower.}
+\end{figure}
+
+Node padding is set separately for the horizontal and vertical axes. One
+combined inner sep starves tall content --- ceilings, fractions, big
+parentheses --- of depth, and the glyph collides with the bottom border:
+$\left\lceil \textsf{quantity} \div \textsf{units} \right\rceil$.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+  \node[dgbox=52mm] {$\left\lceil \textsf{slots} \div 4 \right\rceil$ boxes\strut};
+\end{tikzpicture}
+\caption{Ceiling delimiters clear of the border.}
+\end{figure}
+
+Cross-references resolve on the second pass: Figure~\ref{fig:flow}. Checkbox:
+\cb. Status chip: \pdot{p2}. \housenote{And the muted note macro, for the
+aside that should not compete with body text.}
+
+\section{Where the rules live}
+
+\begin{tabularx}{\linewidth}{@{}L{3.6cm} X@{}}
+\toprule
+\textbf{File} & \textbf{What it decides} \\
+\midrule
+\rowcolor{gymbg}
+\texttt{house.tex}   & Every colour, font, macro and package. Edit once,
+                       every document restyles. \\
+\texttt{DIAGRAMS.md} & Node vocabulary and the layout rules --- edge routing,
+                       alignment, caption spacing. \\
+\rowcolor{gymbg}
+\texttt{LONGDOC.md}  & Chapters, callouts, captioned figures,
+                       cross-referencing. \\
+\texttt{EDITORS.md}  & Wiring the style into TeXworks, VS Code or Overleaf. \\
+\bottomrule
+\end{tabularx}
+
+\begin{houseinfo}[Build it through the script]
+The build script is what puts the style directory on \texttt{TEXINPUTS} and the
+bundled fonts on \texttt{OPENTYPEFONTS}. Compile by hand and neither resolves.
+\end{houseinfo}
+
+\end{document}

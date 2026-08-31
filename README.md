@@ -15,14 +15,47 @@ Then, inside Claude Code:
 /plugin install gc-skills@invisionsoft
 ```
 
-Restart Claude Code (or run `/plugin` and reload) and the skill is live. Claude picks it
-up automatically when a task calls for a PDF; you can also invoke it with `/latex`.
+Restart Claude Code and the skill is live — it appears in the skill list as
+`gc-skills:latex`. Claude picks it up automatically when a task calls for a PDF; you can
+also invoke it by name with `/gc-skills:latex`.
 
-To update later:
+To update later, refresh the marketplace and then the plugin:
 
 ```
 /plugin marketplace update invisionsoft
 ```
+
+```
+/plugin update gc-skills
+```
+
+## What it looks like
+
+Two example documents live in [`examples/`](examples/) — a one-pager and a long document,
+both built with nothing but the house style.
+
+<p align="center">
+  <img src="docs/images/onepager.png" width="32%" alt="One-page checklist: title block, accent-framed callout, two booktabs tables with shaded rows and status chips, and a small flowchart">
+  <img src="docs/images/report-page1.png" width="32%" alt="Report page one: chapter heading, note and warning callouts, a reference table, and a captioned flowchart">
+  <img src="docs/images/report-page2.png" width="32%" alt="Report page two: aligned diagram boxes, a maths node, cross-references, and a reference table">
+</p>
+
+Left: [`examples/onepager.tex`](examples/onepager.tex) — article class, one page.
+Middle and right: [`examples/report.tex`](examples/report.tex) — report class, chapters,
+callouts, captioned figures, cross-references.
+
+Build them yourself, from a clone of this repo:
+
+```powershell
+.\plugins\gc-skills\skills\latex\scripts\build.ps1 .\examples\report.tex -Twice
+```
+
+```bash
+./plugins/gc-skills/skills/latex/scripts/build.sh ./examples/report.tex --twice
+```
+
+The `-Twice` / `--twice` pass is what resolves the cross-references and figure numbers.
+The one-pager needs no second pass.
 
 ## Plugins
 
@@ -36,17 +69,25 @@ What you get:
 
 - **`scripts/build.ps1`** (Windows) and **`scripts/build.sh`** (macOS/Linux) — one
   command from `.tex` to PDF. Handles `\ref`/TOC reruns, `makeindex`, aux cleanup, and
-  prints just the error lines when a build fails instead of the 2000-line log.
+  prints just the error lines when a build fails instead of the 2000-line log. On
+  success it prints a `QUALITY` block if the log shows overfull boxes, bitmap fonts,
+  unresolved references or substituted font shapes — and stays silent when there is
+  nothing to say.
 - **`style/house.tex`** — every colour, macro and package in one file. Edit it once and
   every document restyles.
 - **`style/fonts/`** — Source Sans 3 ships with the plugin, so there is no font install
   step on a new machine.
-- **`DIAGRAMS.md`** — a TikZ flowchart kit: node shapes, edge routing, swimlanes and
-  the spacing rules that keep a diagram from colliding with its caption.
-- **`LONGDOC.md`** — chapters, callout boxes, captioned figures and cross-referencing
-  for anything longer than a one-pager.
+- **`DIAGRAMS.md`** — a TikZ flowchart kit (`dgbox`, `dgterm`, `dgask`, `dgflow`,
+  `dgstub`, `dgtag`) plus the layout rules that matter more than the styles do: aligning
+  rows by their tops rather than their centres, routing edges into junctions, and
+  leaving tall content room to breathe inside a node.
+- **`LONGDOC.md`** — the document skeleton, callout boxes, tables, captioned and
+  labelled figures, and the quality gate to clear before handing a long document over.
 - **`EDITORS.md`** — wiring the house style into TeXworks, VS Code or Overleaf, which
   otherwise launch LuaLaTeX with a bare environment and cannot find `house.tex`.
+
+Flags on both scripts: `-KeepAux` / `--keep-aux`, `-Twice` / `--twice`,
+`-SyncTeX` / `--synctex`, `-NoCheck` / `--no-check`, `-Engine` / `--engine`.
 
 **Requirements:** a TeX distribution with LuaLaTeX.
 
