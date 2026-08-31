@@ -44,6 +44,32 @@ Left: [`examples/onepager.tex`](examples/onepager.tex) — article class, one pa
 Middle and right: [`examples/report.tex`](examples/report.tex) — report class, chapters,
 callouts, captioned figures, cross-references.
 
+### A full-length manual
+
+[`examples/manual/shipping-manual.tex`](examples/manual/shipping-manual.tex) is a
+38-page software manual in the same house style: title page, table of contents, ten
+chapters and three appendices (the last of them a glossary), seven TikZ diagrams,
+22 `longtable` reference tables that break across pages, five code listings and
+resolved cross-references throughout.
+
+<p align="center">
+  <img src="docs/images/manual-title.png" width="32%" alt="Manual title page: rule, title, subtitle, and a metadata table">
+  <img src="docs/images/manual-diagram.png" width="32%" alt="Chapter opening page with a six-step flowchart built from the diagram kit">
+  <img src="docs/images/manual-tables.png" width="32%" alt="Worked-example page: two itemised booktabs tables with money columns and inline arithmetic">
+</p>
+
+It shows the two things a long document needs beyond what `house.tex` ships, and both
+are done in the document rather than by editing the shared style:
+
+- **Numbered section headings.** `house.tex` prints `\section` unnumbered, which suits a
+  one-pager. A manual that says "see Section 3.4" has to show 3.4, so the document
+  re-declares `\titleformat{\section}` for itself.
+- **An extra diagram node.** The kit ships `dgbox`, `dgterm`, `dgask`, `dgflow`,
+  `dgstub` and `dgtag`. The manual adds a green `dgout` for output nodes, built from
+  the house palette rather than from a new colour.
+
+The company, product, rates, postcodes and catalogue in it are invented.
+
 Build them yourself, from a clone of this repo:
 
 ```powershell
