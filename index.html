@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>gc-skills — LaTeX house style</title>
+<style>
+  :root {
+    --bg: #ffffff; --fg: #1a1a1a; --muted: #6e6e6e;
+    --rule: #dddddd; --accent: #b22222; --card: #f6f6f6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16181a; --fg: #e8e8e8; --muted: #a0a0a0;
+      --rule: #33383d; --accent: #e06c6c; --card: #1e2124;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 3rem 1.25rem 5rem;
+    background: var(--bg); color: var(--fg);
+    font: 16px/1.6 "Source Sans 3", -apple-system, BlinkMacSystemFont,
+          "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  main { max-width: 46rem; margin: 0 auto; }
+  h1 { font-size: 1.9rem; margin: 0 0 .3rem; letter-spacing: -.01em; }
+  .sub { color: var(--muted); margin: 0 0 1.6rem; }
+  hr { border: 0; border-top: 1.5px solid var(--rule); margin: 0 0 2rem; }
+  h2 { font-size: 1.05rem; margin: 2.4rem 0 .8rem; }
+  ul { list-style: none; margin: 0; padding: 0; }
+  li { margin: 0 0 .6rem; }
+  a.doc {
+    display: flex; gap: .9rem; align-items: baseline;
+    padding: .85rem 1rem; border: 1px solid var(--rule); border-radius: 6px;
+    background: var(--card); color: inherit; text-decoration: none;
+  }
+  a.doc:hover { border-color: var(--accent); }
+  a.doc b { font-weight: 600; }
+  a.doc span { color: var(--muted); font-size: .9rem; margin-left: auto; }
+  p a { color: var(--accent); }
+  footer { margin-top: 3rem; color: var(--muted); font-size: .9rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>gc-skills</h1>
+  <p class="sub">A LaTeX house style for Claude Code, and the documents it produces.</p>
+  <hr>
+
+  <p>These are the sample documents from the
+  <a href="https://github.com/GerhardCombrinck/claude-skills">claude-skills</a>
+  repository, served here so they open in your browser rather than downloading.</p>
+
+  <h2>Sample documents</h2>
+  <ul>
+    <li><a class="doc" href="examples/manual/shipping-manual.pdf">
+      <b>Shipping manual</b> chapters, diagrams, appendices, glossary <span>38 pages</span></a></li>
+    <li><a class="doc" href="examples/report.pdf">
+      <b>Report</b> callouts, captioned figures, cross-references <span>2 pages</span></a></li>
+    <li><a class="doc" href="examples/onepager.pdf">
+      <b>One-pager</b> checklist tables, status chips, a flowchart <span>1 page</span></a></li>
+  </ul>
+
+  <h2>Install</h2>
+  <p>In Claude Code:
+  <code>/plugin marketplace add GerhardCombrinck/claude-skills</code>, then
+  <code>/plugin install gc-skills@invisionsoft</code>.</p>
+
+  <footer>
+    Source and installation notes on
+    <a href="https://github.com/GerhardCombrinck/claude-skills">GitHub</a>.
+    The company, rates and catalogue in the shipping manual are invented.
+  </footer>
+</main>
+</body>
+</html>
