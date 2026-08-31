@@ -178,6 +178,7 @@ so it reads as a form to write in rather than a table to read.
 | `Missing } inserted` at `\end{tabularx}`, list involved | `itemize`/`enumerate` inside a table cell | move the list out of the table, or wrap the cell content in a `minipage` |
 | Fonts look like default LaTeX | `\input{house}` missing or placed before `\documentclass` | it goes after `\documentclass` and after `geometry` |
 | `Unknown sectioning command \chapter` | `\titleformat{\chapter}` in an `article` document | house.tex guards its own chapter styling with `\@ifundefined{chapter}`; do the same in a document-local override, or use `report` |
+| Footer missing on chapter-opening pages only | `report`/`book` issue `\thispagestyle{plain}` there, which overrides `\pagestyle{fancy}` | `\housefoot` now defines `plain` to match, so this is handled. If a document redefines `\fancypagestyle{plain}` after `\housefoot`, that definition wins |
 | A row of boxes in a diagram looks misaligned | `right=of` aligns node **centres**, so a taller box rides up | anchor north and chain by corners; see [DIAGRAMS.md](DIAGRAMS.md) |
 | A leader in a diagram takes a visible detour | `-|` and `|-` swapped: one is horizontal-then-vertical, the other the reverse | see [DIAGRAMS.md](DIAGRAMS.md) |
 | Maths in a TikZ node is clipped at the bottom | one combined `inner sep` leaves no depth for `\lceil`, fractions, parentheses | set `inner xsep` and `inner ysep` separately, and add `\strut` |
