@@ -12,7 +12,7 @@ Then, inside Claude Code:
 
 ```
 /plugin marketplace add GerhardCombrinck/claude-skills
-/plugin install latex@invisionsoft
+/plugin install gc-skills@invisionsoft
 ```
 
 Restart Claude Code (or run `/plugin` and reload) and the skill is live. Claude picks it
@@ -26,11 +26,11 @@ To update later:
 
 ## Plugins
 
-### `latex`
+### `gc-skills`
 
-Compiles `.tex` to PDF through LuaLaTeX and applies one shared house style, so every
-document out of it looks like the same document family: Source Sans 3, a muted palette,
-booktabs tables, consistent title blocks and footers.
+Ships the **`latex`** skill. Compiles `.tex` to PDF through LuaLaTeX and applies one
+shared house style, so every document out of it looks like the same document family:
+Source Sans 3, a muted palette, booktabs tables, consistent title blocks and footers.
 
 What you get:
 
@@ -41,6 +41,10 @@ What you get:
   every document restyles.
 - **`style/fonts/`** — Source Sans 3 ships with the plugin, so there is no font install
   step on a new machine.
+- **`DIAGRAMS.md`** — a TikZ flowchart kit: node shapes, edge routing, swimlanes and
+  the spacing rules that keep a diagram from colliding with its caption.
+- **`LONGDOC.md`** — chapters, callout boxes, captioned figures and cross-referencing
+  for anything longer than a one-pager.
 - **`EDITORS.md`** — wiring the house style into TeXworks, VS Code or Overleaf, which
   otherwise launch LuaLaTeX with a bare environment and cannot find `house.tex`.
 
@@ -66,4 +70,4 @@ are fast.
 
 Skill code and styles: MIT (see [LICENSE](LICENSE)).
 Bundled Source Sans 3 fonts: SIL Open Font License 1.1, Copyright Adobe
-(see [OFL.txt](plugins/latex/skills/latex/style/fonts/OFL.txt)).
+(see [OFL.txt](plugins/gc-skills/skills/latex/style/fonts/OFL.txt)).

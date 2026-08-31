@@ -15,6 +15,7 @@ TEXFILE=""
 KEEP_AUX=0
 TWICE=0
 SYNCTEX=0
+NO_CHECK=0
 ENGINE="lualatex"
 
 while [ $# -gt 0 ]; do
@@ -22,6 +23,7 @@ while [ $# -gt 0 ]; do
     --keep-aux) KEEP_AUX=1; shift ;;
     --twice)    TWICE=1; shift ;;
     --synctex)  SYNCTEX=1; shift ;;
+    --no-check) NO_CHECK=1; shift ;;
     --engine)   ENGINE="$2"; shift 2 ;;
     -h|--help)  sed -n '2,10p' "$0"; exit 0 ;;
     -*)         echo "unknown flag: $1" >&2; exit 2 ;;
@@ -29,7 +31,7 @@ while [ $# -gt 0 ]; do
   esac
 done
 
-[ -n "$TEXFILE" ] || { echo "usage: build.sh <file.tex> [--keep-aux] [--twice] [--synctex] [--engine ENGINE]" >&2; exit 2; }
+[ -n "$TEXFILE" ] || { echo "usage: build.sh <file.tex> [--keep-aux] [--twice] [--synctex] [--no-check] [--engine ENGINE]" >&2; exit 2; }
 
 case "$ENGINE" in
   lualatex|xelatex|pdflatex) ;;
@@ -133,6 +135,37 @@ if [ "$CODE" -ne 0 ]; then
     echo "  full log: $LOG"
   fi
   exit 1
+fi
+
+# ---- QUALITY REPORT -----------------------------------------
+# Runs before cleanup, because it reads the log. Silent when clean, so it costs
+# nothing on a good build and is impossible to forget on a bad one.
+if [ "$NO_CHECK" -eq 0 ] && [ -f "$LOG" ]; then
+  # Overfull boxes under 1pt are invisible; don't report noise.
+  # The braces matter: under `set -o pipefail` a grep that matches nothing exits 1
+  # and takes the whole assignment, and the build, down with it. A clean document
+  # is exactly the case where these greps find nothing.
+  OVER=$( { grep -ao 'Overfull \\hbox ([0-9.]*pt' "$LOG" 2>/dev/null || true; } \
+         | sed 's/.*(\([0-9.]*\)pt/\1/' \
+         | awk '$1 >= 1.0' | wc -l | tr -d ' ')
+  # A .pk reference means a bitmap font was generated and embedded. That always
+  # signals a font package that failed to resolve to its outlines, and it looks
+  # furry in every viewer.
+  BITMAP=$(grep -ac '\.pk>' "$LOG" 2>/dev/null || true)
+  UNDEF=$(grep -ac "Reference \`.*' on page" "$LOG" 2>/dev/null || true)
+  SHAPE=$(grep -ac "Font shape \`.*' undefined" "$LOG" 2>/dev/null || true)
+
+  ISSUES=""
+  [ "${OVER:-0}"   -gt 0 ] && ISSUES="$ISSUES\n  ! $OVER overfull box(es) over 1pt"
+  [ "${BITMAP:-0}" -gt 0 ] && ISSUES="$ISSUES\n  ! bitmap fonts in use ($BITMAP), a font failed to resolve"
+  [ "${UNDEF:-0}"  -gt 0 ] && ISSUES="$ISSUES\n  ! $UNDEF undefined reference(s)"
+  [ "${SHAPE:-0}"  -gt 0 ] && ISSUES="$ISSUES\n  ! $SHAPE substituted font shape(s)"
+
+  if [ -n "$ISSUES" ]; then
+    echo "QUALITY"
+    printf '%b\n' "${ISSUES#\\n}"
+    echo "  rebuild with --keep-aux and read $BASE.log for locations"
+  fi
 fi
 
 if [ "$KEEP_AUX" -eq 0 ]; then

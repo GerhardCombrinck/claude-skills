@@ -110,6 +110,35 @@ Bar chart with one colour per group, used for the training volume plot:
 `clip=false` is what lets labels sit above the plot area. Phase dividers are plain
 `\draw` lines in `axis cs:` coordinates.
 
+## Verifying a document before you hand it over
+
+"It compiled" is not "it is finished". The build script prints a `QUALITY` block
+when the log contains any of the following; all four should be absent in a
+document going to a client. Pass `-NoCheck` / `--no-check` to suppress it.
+
+| Signal | Why it matters |
+|---|---|
+| `Overfull \hbox` over 1pt | text running past the margin. Under 1pt is invisible, but zero is achievable and worth reaching |
+| `.pk>` in the log | a **bitmap font** was generated and embedded. Always means a font package failed to resolve to outlines. It looks furry on screen and worse in print |
+| `Reference ... undefined` | a `\ref` never resolved. The script reruns automatically, so a survivor is a missing or misspelt label |
+| `Font shape ... undefined` | a requested weight or shape does not exist and LaTeX quietly substituted another |
+
+Then **look at the output at high magnification.** Page-scale previews hide the
+defects that separate a good document from a finished one: hairline collisions,
+clipped descenders, a label sitting 0.3mm inside a box edge.
+
+```bash
+pdftoppm -png -r 600 -f 17 -l 17 doc.pdf page     # one page, 600 dpi
+python -c "from PIL import Image; im=Image.open('page-17.png'); \
+           im.crop((2800,3500,4250,4000)).save('crop.png')"
+```
+
+This cuts both ways. It settles "is this clipped?" as a fact rather than an
+impression, which is how you avoid fixing a problem that was never there. A
+ceiling bracket `⌈ ⌉` reported as a broken glyph is the standard example: at
+600 dpi you can see the clear space below it and know the report is about the
+notation, not the rendering.
+
 ## Table patterns
 
 **Two-column reference blocks side by side:**
@@ -148,6 +177,19 @@ so it reads as a form to write in rather than a table to read.
 | `Missing } inserted` at `\end{tabularx}` | **a `\begin{tabularx}` opened in one macro and closed in another** — tabularx reads its body whole and cannot be split across an environment definition | build the layout from `minipage` boxes separated by `\hfill` instead |
 | `Missing } inserted` at `\end{tabularx}`, list involved | `itemize`/`enumerate` inside a table cell | move the list out of the table, or wrap the cell content in a `minipage` |
 | Fonts look like default LaTeX | `\input{house}` missing or placed before `\documentclass` | it goes after `\documentclass` and after `geometry` |
+| `Unknown sectioning command \chapter` | `\titleformat{\chapter}` in an `article` document | house.tex guards its own chapter styling with `\@ifundefined{chapter}`; do the same in a document-local override, or use `report` |
+| A row of boxes in a diagram looks misaligned | `right=of` aligns node **centres**, so a taller box rides up | anchor north and chain by corners; see [DIAGRAMS.md](DIAGRAMS.md) |
+| A leader in a diagram takes a visible detour | `-|` and `|-` swapped: one is horizontal-then-vertical, the other the reverse | see [DIAGRAMS.md](DIAGRAMS.md) |
+| Maths in a TikZ node is clipped at the bottom | one combined `inner sep` leaves no depth for `\lceil`, fractions, parentheses | set `inner xsep` and `inner ysep` separately, and add `\strut` |
+| Short table splits across a page with an orphan header | `longtable` repeats headers by design | use `tabular` inside `center` for anything that fits a page |
+
+**Only if you leave the house font stack** (LuaLaTeX + fontspec avoids all three):
+
+| Error | Cause | Fix |
+|---|---|---|
+| Headings silently render in Computer Modern bitmaps | a font package's `default` option sets `\familydefault` only, leaving `\sfdefault` untouched | use the package's `defaultsans` option (this is the `lato` behaviour), and check the log for `.pk>` |
+| `Command \Bbbk already defined` | `amssymb` loaded alongside `newtxmath` | drop `amssymb`; newtx already provides its symbols, `\square` included |
+| `auto expansion is only possible with scalable fonts` | microtype font expansion on a font with no scalable instances | `\usepackage[protrusion=true,expansion=false]{microtype}` |
 
 Read the full log with `-KeepAux` / `--keep-aux` when the summarised errors aren't enough.
 

@@ -27,7 +27,14 @@ Prints `OK mydoc.pdf 257 KB 1 page(s)` and deletes aux files. On failure it prin
 
 Flags: `-KeepAux` / `--keep-aux` (keep .aux/.log), `-Twice` / `--twice` (force two
 passes for `\ref`/TOC), `-SyncTeX` / `--synctex` (emit and keep `.synctex.gz` for editor
-source ↔ PDF navigation), `-Engine` / `--engine` `xelatex|pdflatex` (default `lualatex`).
+source ↔ PDF navigation), `-Engine` / `--engine` `xelatex|pdflatex` (default `lualatex`),
+`-NoCheck` / `--no-check` (skip the quality report).
+
+After a successful build the script prints a `QUALITY` block if the log shows overfull
+boxes, bitmap fonts, unresolved references or substituted font shapes. It stays silent
+when there is nothing to report. Treat any of them as unfinished work in a document you
+are handing over, and look at the output at 400–600 dpi before calling it done:
+[REFERENCE.md](REFERENCE.md).
 
 **Always build through this script.** It sets `TEXINPUTS` so `\input{house}` resolves,
 sets `OPENTYPEFONTS` so the bundled fonts resolve without being installed, and picks the
@@ -88,10 +95,21 @@ For landscape one-pagers use `\documentclass[10pt,a4paper,landscape]` and
 | Font | Source Sans 3, bundled in `style/fonts/`, loaded as OTF via `fontspec`. Bold is Semibold. |
 | Colours | `ink` `muted` `accent` `rulegrey`; row tints `restbg` `gymbg` `racebg`; phases `p0`–`p4` |
 | Packages | xcolor(table), booktabs, tabularx, array, enumitem, amssymb, ulem, fancyhdr, titlesec, tcolorbox, pgfplots, hyperref |
-| Macros | `\housetitle` `\housetitlewide` `\housefoot` `\housenote` `\housemeta` `\housetoc` `\cb` `\pdot{p2}` `housebox` env |
+| Macros | `\housetitle` `\housetitlewide` `\housefoot` `\housenote` `\housemeta` `\housetoc` `\cb` `\pdot{p2}` `L{}` column |
+| Boxes | `housebox` (loud, accent frame), `houseinfo` (calm), `housewarn` (attention). The last two take an optional title |
+| Long docs | chapter styling (guarded to report/book), `float` for `figure[H]`, styled captions |
+| Diagrams | TikZ kit: `dgbox` `dgterm` `dgask` `dgflow` `dgstub` `dgtag` |
 
 **All styling lives in [style/house.tex](style/house.tex).** Edit that one file to restyle
 every document. Font alternatives are listed as commented lines at the top of it.
+
+## Beyond the one-pager
+
+- **[LONGDOC.md](LONGDOC.md)** — manuals and handbooks: the `report` skeleton, callouts,
+  when `tabular` beats `longtable`, and the quality gate before handover.
+- **[DIAGRAMS.md](DIAGRAMS.md)** — flowcharts: the node kit, and the layout rules that
+  decide whether a diagram looks deliberate (top-aligning rows, `-|` versus `|-`,
+  rejoining branches, where labels go).
 
 ## House writing rules
 

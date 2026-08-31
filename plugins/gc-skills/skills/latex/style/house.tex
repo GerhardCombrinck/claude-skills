@@ -139,6 +139,99 @@
 \newcommand{\housenote}[1]{{\footnotesize\color{muted} #1}}
 
 
+%% ---- LONG DOCUMENTS ----------------------------------------
+%% Everything below is inert in a one-page article. It only starts mattering
+%% once a document grows chapters, figures and callouts.
+
+%% Chapter styling exists only in report/book. Guarded, because \titleformat
+%% on an undefined sectioning command is a hard error in article class.
+\makeatletter
+\@ifundefined{chapter}{}{%
+  \titleformat{\chapter}[display]
+    {\normalfont\bfseries\color{ink}}
+    {\normalsize\color{accent}\MakeUppercase{\chaptertitlename}\ \thechapter}
+    {6pt}{\Huge}%
+  \titlespacing*{\chapter}{0pt}{-18pt}{26pt}%
+}
+\makeatother
+
+%% float gives \begin{figure}[H], which pins a diagram exactly where it was
+%% written. A figure that drifts two pages away from the paragraph explaining
+%% it is worse than a slightly short page.
+\usepackage{float}
+
+%% Captions read as annotation, not as body text competing with the figure.
+\usepackage{caption}
+\captionsetup{font={small,color=muted},labelfont={color=accent,bf},
+  labelsep=period,skip=9pt}
+
+
+%% ---- CALLOUTS ----------------------------------------------
+%% housebox (above) is the loud accent-framed "one thing that matters" box.
+%% These two are for running commentary inside a longer document:
+%%   houseinfo  calm, for rationale and context
+%%   housewarn  attention, for the thing that will cost money if missed
+%% Both take an optional title:  \begin{housewarn}[The VAT trap] ...
+\newtcolorbox{houseinfo}[1][Note]{%
+  breakable, enhanced, colback=restbg, colframe=muted,
+  boxrule=0pt, leftrule=3pt, arc=0pt, outer arc=0pt,
+  left=10pt, right=10pt, top=7pt, bottom=7pt,
+  fonttitle=\bfseries\footnotesize, coltitle=ink,
+  title={#1}, attach title to upper=\par\vspace{3pt}}
+
+\newtcolorbox{housewarn}[1][Important]{%
+  breakable, enhanced, colback=racebg, colframe=accent,
+  boxrule=0pt, leftrule=3pt, arc=0pt, outer arc=0pt,
+  left=10pt, right=10pt, top=7pt, bottom=7pt,
+  fonttitle=\bfseries\footnotesize, coltitle=accent,
+  title={#1}, attach title to upper=\par\vspace{3pt}}
+
+
+%% ---- DIAGRAM KIT -------------------------------------------
+%% Flowchart styles. pgfplots already pulled in tikz, so this only adds the
+%% libraries and the node vocabulary. See DIAGRAMS.md for the layout rules
+%% that matter more than the styles do.
+%%
+%%   dgbox    process step        white, grey border
+%%   dgterm   start / end / output    tinted, blue border
+%%   dgask    decision            tinted, amber border
+%%   dgflow   arrow between nodes
+%%   dgstub   connector with NO arrowhead (into a junction coordinate)
+%%   dgtag    branch label (yes / no), white-filled so it masks the line
+%%
+%% Each node style takes an optional text width:  \node[dgbox=44mm] ...
+\usetikzlibrary{shapes.geometric,arrows.meta,positioning,calc,fit,backgrounds}
+
+\definecolor{dgedge}{HTML}{CFCFCF}
+\definecolor{dgtermbg}{HTML}{EEF2F7}
+\definecolor{dgtermedge}{HTML}{2E7D9A}
+\definecolor{dgaskbg}{HTML}{FBF3E6}
+\definecolor{dgaskedge}{HTML}{C77F1A}
+
+\tikzset{
+  %% inner xsep and ysep are set SEPARATELY on purpose. One combined
+  %% \inner sep starves tall content (\lceil, fractions, parentheses) of
+  %% depth and the glyph collides with the bottom border.
+  dgbox/.style={draw=dgedge, line width=0.9pt, fill=white, rounded corners=2.5pt,
+    align=center, inner xsep=5pt, inner ysep=6.5pt, text=ink,
+    font=\sffamily\scriptsize, minimum height=7.5mm, text width=#1},
+  dgbox/.default=32mm,
+  dgterm/.style={dgbox=#1, fill=dgtermbg, draw=dgtermedge, line width=1.1pt},
+  dgterm/.default=32mm,
+  dgask/.style={dgbox=#1, fill=dgaskbg, draw=dgaskedge, line width=1pt},
+  dgask/.default=34mm,
+  dgflow/.style={draw=muted, line width=0.75pt,
+    -{Stealth[length=2.2mm,width=1.6mm]}, rounded corners=3pt},
+  dgstub/.style={draw=muted, line width=0.75pt, rounded corners=3pt},
+  dgtag/.style={font=\sffamily\fontsize{6.4}{7.6}\selectfont, text=muted,
+    inner sep=2.4pt, fill=white, align=center},
+}
+
+%% Ragged-right fixed-width column. Justified text in a narrow table column
+%% produces rivers; this is the column type to reach for in reference tables.
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+
 %% ---- LINKS & BOOKMARKS -------------------------------------
 %% Loaded last on purpose: hyperref must come after almost everything.
 %% Packages that must load AFTER it (imakeidx, cleveref) go in the

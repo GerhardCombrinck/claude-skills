@@ -23,7 +23,11 @@ param(
 
     # Engine override. Default lualatex — house.tex uses fontspec/OTF.
     [ValidateSet('lualatex','xelatex','pdflatex')]
-    [string]$Engine = 'lualatex'
+    [string]$Engine = 'lualatex',
+
+    # Skip the post-build quality report (overfull boxes, bitmap fonts,
+    # unresolved refs). The report is silent when there is nothing to say.
+    [switch]$NoCheck
 )
 
 $ErrorActionPreference = 'Stop'
@@ -117,6 +121,39 @@ try {
             Write-Host "  full log: $log" -ForegroundColor DarkGray
         }
         exit 1
+    }
+
+    # ---- QUALITY REPORT -------------------------------------
+    # Runs before cleanup, because it reads the log. Silent when clean, so it
+    # costs nothing on a good build and is impossible to forget on a bad one.
+    if (-not $NoCheck -and (Test-Path $log)) {
+        $logText = Get-Content $log -Raw -ErrorAction SilentlyContinue
+
+        # Overfull boxes under 1pt are invisible; don't report noise.
+        $over = ([regex]::Matches($logText, 'Overfull \\hbox \((\d+(?:\.\d+)?)pt') |
+                 Where-Object { [double]$_.Groups[1].Value -ge 1.0 }).Count
+
+        # A .pk reference means a bitmap font was generated and embedded. On a
+        # modern engine that always signals a font package that failed to
+        # resolve to its Type1/OTF outlines, and it looks furry in every viewer.
+        $bitmap = ([regex]::Matches($logText, '\.pk>')).Count
+
+        # Patterns deliberately avoid quote and backtick characters: the log wraps
+        # them around the label name, and matching them here is a quoting minefield.
+        $undef  = ([regex]::Matches($logText, 'Reference .{1,80}? undefined on input line')).Count
+        $shape  = ([regex]::Matches($logText, 'Font shape .{1,60}? undefined')).Count
+
+        $issues = @()
+        if ($over)   { $issues += "$over overfull box(es) over 1pt" }
+        if ($bitmap) { $issues += "bitmap fonts in use ($bitmap) - a font failed to resolve" }
+        if ($undef)  { $issues += "$undef undefined reference(s)" }
+        if ($shape)  { $issues += "$shape substituted font shape(s)" }
+
+        if ($issues) {
+            Write-Host "QUALITY" -ForegroundColor Yellow
+            foreach ($i in $issues) { Write-Host "  ! $i" -ForegroundColor Yellow }
+            Write-Host "  rebuild with -KeepAux and read $base.log for locations" -ForegroundColor DarkGray
+        }
     }
 
     if (-not $KeepAux) {
