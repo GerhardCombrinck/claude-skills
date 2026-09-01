@@ -171,7 +171,7 @@ fi
 if [ "$KEEP_AUX" -eq 0 ]; then
   # .synctex.gz is the one aux file worth keeping when asked for: deleting it is
   # what breaks double-click navigation between the PDF and the source.
-  JUNK="aux log out toc lof lot nav snm fls fdb_latexmk idx ilg ind"
+  JUNK="aux log out toc lof lot fls fdb_latexmk idx ilg ind"
   [ "$SYNCTEX" -eq 0 ] && JUNK="$JUNK synctex.gz"
   for ext in $JUNK; do
     rm -f "$WORK_DIR/$BASE.$ext"

@@ -25,10 +25,14 @@ install `~/.claude/skills/latex/scripts/`. If `$env:CLAUDE_PLUGIN_ROOT` is set, 
 Prints `OK mydoc.pdf 257 KB 1 page(s)` and deletes aux files. On failure it prints the
 `!` error lines and the `l.NNN` locations, and leaves the log in place.
 
-Flags: `-KeepAux` / `--keep-aux` (keep .aux/.log), `-Twice` / `--twice` (force two
-passes for `\ref`/TOC), `-SyncTeX` / `--synctex` (emit and keep `.synctex.gz` for editor
-source ↔ PDF navigation), `-Engine` / `--engine` `xelatex|pdflatex` (default `lualatex`),
+Flags: `-KeepAux` / `--keep-aux` (keep .aux/.log), `-Twice` / `--twice` (force a second
+pass), `-SyncTeX` / `--synctex` (emit and keep `.synctex.gz` for editor source ↔ PDF
+navigation), `-Engine` / `--engine` `xelatex|pdflatex` (default `lualatex`),
 `-NoCheck` / `--no-check` (skip the quality report).
+
+`\ref` and the TOC do **not** need `-Twice`. The script re-runs the engine by itself, up
+to three times, whenever the log asks for another pass. Use the flag only for something
+that needs a second pass without saying so, in practice tikz externalisation.
 
 After a successful build the script prints a `QUALITY` block if the log shows overfull
 boxes, bitmap fonts, unresolved references or substituted font shapes. It stays silent

@@ -98,8 +98,10 @@ Build them yourself, from a clone of this repo:
 ./plugins/gc-skills/skills/latex/scripts/build.sh ./examples/report.tex --twice
 ```
 
-The `-Twice` / `--twice` pass is what resolves the cross-references and figure numbers.
-The one-pager needs no second pass.
+You rarely need `-Twice` / `--twice`: the script re-runs the engine by itself, up to three
+times, whenever the log asks for another pass, so `\ref` and the TOC settle on their own.
+Reach for the flag only when something needs a second pass without saying so, which in
+practice means tikz externalisation.
 
 ## Plugins
 

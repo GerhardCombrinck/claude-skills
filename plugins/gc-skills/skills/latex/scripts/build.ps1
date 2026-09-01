@@ -7,7 +7,6 @@
   .\build.ps1 week02_running.tex
   .\build.ps1 C:\path\doc.tex -KeepAux
 #>
-[CmdletBinding()]
 param(
     [Parameter(Mandatory = $true, Position = 0)]
     [string]$TexFile,
@@ -34,12 +33,10 @@ $ErrorActionPreference = 'Stop'
 
 # ---- ENGINE LOOKUP ------------------------------------------
 # Order: $env:LATEX_BIN, the default MiKTeX user install, then PATH.
-$candidates = @()
-if ($env:LATEX_BIN) { $candidates += (Join-Path $env:LATEX_BIN "$Engine.exe") }
-$candidates += (Join-Path "$env:LOCALAPPDATA\Programs\MiKTeX\miktex\bin\x64" "$Engine.exe")
-
-$TexBin = $null
-foreach ($c in $candidates) { if (Test-Path $c) { $TexBin = $c; break } }
+$TexBin = @(
+    if ($env:LATEX_BIN) { Join-Path $env:LATEX_BIN "$Engine.exe" }
+    Join-Path "$env:LOCALAPPDATA\Programs\MiKTeX\miktex\bin\x64" "$Engine.exe"
+) | Where-Object { Test-Path $_ } | Select-Object -First 1
 if (-not $TexBin) { $TexBin = (Get-Command $Engine -ErrorAction SilentlyContinue).Source }
 if (-not $TexBin) {
     throw "$Engine not found. Install MiKTeX (winget install MiKTeX.MiKTeX --scope user) or TeX Live, or set `$env:LATEX_BIN to the directory holding $Engine.exe."
@@ -159,7 +156,7 @@ try {
     if (-not $KeepAux) {
         # .synctex.gz is the one aux file worth keeping when asked for: deleting it is
         # what breaks double-click navigation between the PDF and the source.
-        $junk = 'aux','log','out','toc','lof','lot','nav','snm','fls','fdb_latexmk','idx','ilg','ind'
+        $junk = 'aux','log','out','toc','lof','lot','fls','fdb_latexmk','idx','ilg','ind'
         if (-not $SyncTeX) { $junk += 'synctex.gz' }
         foreach ($ext in $junk) {
             Remove-Item (Join-Path $workDir "$base.$ext") -ErrorAction SilentlyContinue

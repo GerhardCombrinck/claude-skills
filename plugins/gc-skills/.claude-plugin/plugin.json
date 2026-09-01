@@ -1,7 +1,7 @@
 {
   "name": "gc-skills",
   "description": "Compile LaTeX documents to PDF with a shared house style (Source Sans 3, muted palette, booktabs tables). Includes a TikZ flowchart kit, long-document support (chapters, callouts, captioned figures) and a post-build quality report. Fonts ship with the plugin, so a fresh TeX install needs no font setup.",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "author": { "name": "Gerhard Combrinck" },
   "homepage": "https://github.com/GerhardCombrinck/claude-skills",
   "license": "MIT",
