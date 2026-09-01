@@ -75,8 +75,10 @@ are done in the document rather than by editing the shared style:
   the house palette rather than from a new colour.
 
 Its six screenshots are annotated with the `shot*` kit
-([`SCREENSHOTS.md`](plugins/gc-skills/skills/latex/SCREENSHOTS.md)), three with side
-labels and leaders and three with numbered badges and a key. The screens themselves are
+([`SCREENSHOTS.md`](plugins/gc-skills/skills/latex/SCREENSHOTS.md)): four with side
+labels and leaders, and two with numbered badges and a key. That split follows the
+guide's own rule, since only those two figures carry four or more points. The screens
+themselves are
 mockups: [`examples/manual/mockups/screens.html`](examples/manual/mockups/screens.html)
 holds the markup, `capture.py` shoots each one as a CSS selector at 2x, and
 `measure.py` reads the highlight-band coordinates off the resulting PNG so none of them
