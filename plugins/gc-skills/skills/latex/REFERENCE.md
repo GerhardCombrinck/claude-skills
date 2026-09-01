@@ -182,6 +182,9 @@ so it reads as a form to write in rather than a table to read.
 | A row of boxes in a diagram looks misaligned | `right=of` aligns node **centres**, so a taller box rides up | anchor north and chain by corners; see [DIAGRAMS.md](DIAGRAMS.md) |
 | A leader in a diagram takes a visible detour | `-|` and `|-` swapped: one is horizontal-then-vertical, the other the reverse | see [DIAGRAMS.md](DIAGRAMS.md) |
 | Maths in a TikZ node is clipped at the bottom | one combined `inner sep` leaves no depth for `\lceil`, fractions, parentheses | set `inner xsep` and `inner ysep` separately, and add `\strut` |
+| `File 'figures/x.png' not found` from `\shotimg` | `\shotimg` prefixes `figures/`, so a path already containing it doubles up | pass the bare filename; keep captures in `figures/` beside the document |
+| A screenshot annotation drifts after resizing the figure | coordinates written in mm rather than in the normalised `shotscope` units | put `\hilite` and `\pt` inside `shotscope`; see [SCREENSHOTS.md](SCREENSHOTS.md) |
+| A screenshot looks soft next to the page's text | captured at 1x, or placed wider than it was captured | recapture at `device_scale_factor=2` |
 | Short table splits across a page with an orphan header | `longtable` repeats headers by design | use `tabular` inside `center` for anything that fits a page |
 
 **Only if you leave the house font stack** (LuaLaTeX + fontspec avoids all three):

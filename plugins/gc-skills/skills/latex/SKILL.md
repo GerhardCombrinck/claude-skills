@@ -99,6 +99,7 @@ For landscape one-pagers use `\documentclass[10pt,a4paper,landscape]` and
 | Boxes | `housebox` (loud, accent frame), `houseinfo` (calm), `housewarn` (attention). The last two take an optional title |
 | Long docs | chapter styling (guarded to report/book), `float` for `figure[H]`, styled captions |
 | Diagrams | TikZ kit: `dgbox` `dgterm` `dgask` `dgflow` `dgstub` `dgtag` |
+| Screenshots | `\shotimg` `shotscope` `\hilite` `\pt` `\sidelbl` `\leadto` `\shotbadgeat` `\shotkey` |
 
 **All styling lives in [style/house.tex](style/house.tex).** Edit that one file to restyle
 every document. Font alternatives are listed as commented lines at the top of it.
@@ -110,6 +111,9 @@ every document. Font alternatives are listed as commented lines at the top of it
 - **[DIAGRAMS.md](DIAGRAMS.md)** — flowcharts: the node kit, and the layout rules that
   decide whether a diagram looks deliberate (top-aligning rows, `-|` versus `|-`,
   rejoining branches, where labels go).
+- **[SCREENSHOTS.md](SCREENSHOTS.md)** — annotating a screen capture: the `shot*` kit,
+  the two annotation patterns and when each one applies, how to place a highlight band
+  by measuring the PNG instead of guessing, and the capture recipe.
 
 ## House writing rules
 

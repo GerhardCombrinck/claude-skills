@@ -13,7 +13,7 @@
       "name": "gc-skills",
       "source": "./plugins/gc-skills",
       "description": "Compile LaTeX to PDF with a shared house style. TikZ flowchart kit, long-document support, post-build quality report. Ships its own fonts, runs on Windows (MiKTeX) and macOS/Linux (TeX Live/MacTeX).",
-      "version": "1.3.1",
+      "version": "1.4.0",
       "author": { "name": "Gerhard Combrinck" },
       "keywords": ["latex", "pdf", "lualatex", "typesetting", "documents"],
       "category": "productivity"

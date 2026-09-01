@@ -245,6 +245,68 @@
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 
+%% ---- SCREENSHOT KIT ----------------------------------------
+%% Annotating a screenshot: vector TikZ drawn over the raster, on coordinates
+%% normalised to the image box. Two consequences worth having:
+%%
+%%   1. The annotations stay crisp at any zoom, because they are not pixels.
+%%   2. They never drift when the figure is resized, because 0..1 means "this
+%%      fraction of the image", not "this many millimetres".
+%%
+%% Annotations are drawn in accent, the house's one loud colour, so they read
+%% as commentary rather than as part of the captured interface.
+%%
+%% See SCREENSHOTS.md for the two annotation patterns, the capture recipe, and
+%% how to place a band by measuring the PNG instead of guessing at it.
+\usepackage{graphicx}
+
+\tikzset{
+  %% The frame around the capture itself. Quiet: it separates the screenshot
+  %% from the page, it is not an annotation.
+  shotframe/.style={draw=rulegrey, line width=0.9pt},
+  %% A highlight band or box over a region of the image.
+  shothi/.style={draw=accent, line width=1.1pt, rounded corners=1.5pt},
+  %% A numbered badge, for the gutter-and-key pattern.
+  shotbadge/.style={circle, fill=accent, text=white, inner sep=0pt,
+    minimum size=4.2mm, font=\sffamily\bfseries\fontsize{7.2}{8}\selectfont},
+  %% A leader line from a side label to a point on the image.
+  shotlead/.style={draw=accent, line width=0.9pt,
+    -{Stealth[length=2mm,width=1.5mm]}},
+  %% A side label sitting outside the frame.
+  shotlabel/.style={draw=accent, line width=0.9pt, fill=white,
+    rounded corners=2pt, align=left, inner sep=5pt, text=ink,
+    font=\sffamily\scriptsize, text width=#1},
+  shotlabel/.default=36mm,
+}
+
+%% Place the capture. Always named (img), so every annotation hangs off it.
+%% Width is a fraction of \linewidth: \shotimg{0.6}{settings.png}
+\newcommand{\shotimg}[2]{%
+  \node[anchor=south west, inner sep=0, shotframe] (img) at (0,0)
+    {\includegraphics[width=#1\linewidth]{figures/#2}};}
+
+%% Inside this scope (0,0) is the image's bottom left and (1,1) its top right.
+%% Every \hilite and \pt coordinate below is in those units.
+\newenvironment{shotscope}
+  {\begin{scope}[x={(img.south east)},y={(img.north west)}]}
+  {\end{scope}}
+
+\newcommand{\hilite}[4]{\draw[shothi] (#1,#2) rectangle (#3,#4);}
+\newcommand{\pt}[3]{\coordinate (#1) at (#2,#3);}
+
+%% Pattern B: a side label outside the frame, plus a leader to a point.
+%% #2/#3 offset the label from the image's east edge, in real units.
+\newcommand{\sidelbl}[5]{%
+  \node[shotlabel=#4, anchor=west] (#1) at ($(img.east)+(#2,#3)$) {#5};}
+\newcommand{\leadto}[2]{\draw[shotlead] (#1.west) -- (#2);}
+
+%% Pattern A: a numbered badge in the left gutter, and its key entry below
+%% the figure. \shotbadgeat takes a normalised y, so it goes inside shotscope.
+\newcommand{\shotbadgeat}[2]{\node[shotbadge] at (-0.035,#1) {#2};}
+\newcommand{\shotkey}[1]{%
+  \raisebox{-0.6pt}{\tikz\node[shotbadge]{#1};}\hspace{2pt}}
+
+
 %% ---- LINKS & BOOKMARKS -------------------------------------
 %% Loaded last on purpose: hyperref must come after almost everything.
 %% Packages that must load AFTER it (imakeidx, cleveref) go in the
