@@ -131,17 +131,17 @@ them the way Riverbend Aquatics prices them today.
 For any given cart it works out:
 
 \begin{itemize}
-  \item \textbf{Dry-goods delivery} --- one flat charge for the ordinary items in the order.
-  \item \textbf{The very-large-item charge} --- charged per very-large item, \emph{instead of}
+  \item \textbf{Dry-goods delivery}: one flat charge for the ordinary items in the order.
+  \item \textbf{The very-large-item charge}: charged per very-large item, \emph{instead of}
         the dry-goods rate, not in addition to it.
-  \item \textbf{Livestock delivery} --- at a local or a national rate, depending on the
+  \item \textbf{Livestock delivery}: at a local or a national rate, depending on the
         delivery postcode.
-  \item \textbf{Cooler boxes} --- how many insulated boxes the livestock needs, from the
+  \item \textbf{Cooler boxes}: how many insulated boxes the livestock needs, from the
         number and size of packing bags, and what they cost.
-  \item \textbf{Heat packs} --- one per cooler box, but only while heat-pack season is on.
-  \item \textbf{The free-shipping discount} --- whether the order has earned free dry-goods
+  \item \textbf{Heat packs}: one per cooler box, but only while heat-pack season is on.
+  \item \textbf{The free-shipping discount}: whether the order has earned free dry-goods
         delivery, and what that is worth.
-  \item \textbf{Collection} --- an order collected from the Riverbend store pays no
+  \item \textbf{Collection}: an order collected from the Riverbend store pays no
         transport, but still pays for its packaging.
 \end{itemize}
 
@@ -172,13 +172,13 @@ where to look when something needs changing.
 \midrule
 \endhead
 \textbf{The engine}\newline \opt{includes/} &
-Every pricing rule. Contains no WordPress code at all --- no options, no database, no
+Every pricing rule. Contains no WordPress code at all: no options, no database, no
 clock. It takes a cart plus a set of settings and returns a priced breakdown. This is
 what makes the pricing testable without a shop.\\
 \addlinespace
 \textbf{The adapter}\newline \opt{wordpress/} &
 The only code that knows what WooCommerce is. It gathers the cart, hands it to the
-engine, and puts the answer back where WooCommerce expects it --- as a shipping rate,
+engine, and puts the answer back where WooCommerce expects it: as a shipping rate,
 as cart fees, and as order meta.\\
 \bottomrule
 \end{longtable}
@@ -243,7 +243,7 @@ only offers a shipping method that has been added to a zone.
 
 Repeat for every zone that should use these rates. If a zone has other methods on it
 (Flat rate, Free shipping, Local pickup), the customer will see those alongside
-Riverbend Shipping --- see Section~\ref{sec:collection-clash} about Local Pickup in
+Riverbend Shipping. See Section~\ref{sec:collection-clash} about Local Pickup in
 particular.
 
 \section{First-run checklist}
@@ -308,14 +308,14 @@ Livestock delivery elsewhere in the country & \R{280.00} & Livestock delivery an
 \addlinespace
 Normal dry-goods delivery & \R{160.00} & One flat charge for the whole dry-goods part of the order, however many items it contains.\\
 \addlinespace
-Very large product delivery & \R{320.00} & Charged \emph{per very-large item}, instead of the dry-goods rate --- not as well as it.\\
+Very large product delivery & \R{320.00} & Charged \emph{per very-large item}, instead of the dry-goods rate, not as well as it.\\
 \bottomrule
 \end{longtable}
 
 \begin{houseinfo}
 There is currently one dry-goods rate and one very-large rate for the whole country.
 Only livestock has a local/national split. If a cheaper local tier is ever wanted for
-the other two, it is a settings change plus one line of code --- no change to the
+the other two, it is a settings change plus one line of code, with no change to the
 pricing logic itself.
 \end{houseinfo}
 
@@ -386,8 +386,8 @@ season is on now} when winter starts and untick it when it ends. The start and e
 date fields are ignored.
 
 \textbf{Between two dates} compares month and day only, so a window set once keeps
-working every year. A window that runs backwards --- for example \opt{11-01} to
-\opt{02-28} --- correctly wraps across the new year rather than matching nothing.
+working every year. A window that runs backwards, for example \opt{11-01} to
+\opt{02-28}, correctly wraps across the new year rather than matching nothing.
 
 The date is the shop's own date, not the server's, so a local winter setting
 does not switch over at UTC midnight.
@@ -470,7 +470,7 @@ is the majority of products, so the default matters: leaving it on \opt{dry\_goo
 means installing the plugin does not silently reprice thousands of items on day one.
 
 \begin{housewarn}[Verify your slugs]
-A slug that does not match any real shipping class is not an error --- those products
+A slug that does not match any real shipping class is not an error. Those products
 just quietly fall through to the unclassified default. Check the actual slugs under
 \menu{Products $\rightarrow$ Shipping classes} and correct the list. It is a
 two-minute job and it is the single most likely cause of a product being priced
@@ -549,7 +549,7 @@ On a product, these appear under \menu{Product data $\rightarrow$ Shipping}.
 \textbf{Field} & \textbf{Applies to} & \textbf{What it means}\\
 \midrule
 \endhead
-Units per packing bag & Livestock only & How many of this product ship in one bag --- three shrimp to a bag, one koi to a bag. Leave blank for anything that is not livestock.\\
+Units per packing bag & Livestock only & How many of this product ship in one bag: three shrimp to a bag, one koi to a bag. Leave blank for anything that is not livestock.\\
 \addlinespace
 Packing bag size & Livestock only & \textsf{Standard} or \textsf{Large}. A large bag takes twice the cooler-box space of a standard one.\\
 \addlinespace
@@ -566,7 +566,7 @@ Excluded from free shipping & Any product & This product never counts towards fr
 \endhead
 Units per bag, on a livestock product &
 Assumes \textbf{one per bag} and writes a warning to the log. This over-quotes
-packaging rather than under-quoting it --- the shop is not left absorbing the
+packaging rather than under-quoting it. The shop is not left absorbing the
 difference, but the customer may be charged for more boxes than the order needs.\\
 \addlinespace
 Bag size, on a livestock product &
@@ -574,7 +574,7 @@ Uses the size implied by the shipping class if there is one; otherwise assumes
 \textbf{standard} and writes a warning.\\
 \addlinespace
 Shipping class, on any product &
-Uses whatever \textbf{Products with no shipping class} is set to --- \opt{dry\_goods}
+Uses whatever \textbf{Products with no shipping class} is set to, which is \opt{dry\_goods}
 by default.\\
 \bottomrule
 \end{longtable}
@@ -600,7 +600,7 @@ WooCommerce's bulk edit:
   \item The three fields appear at the bottom of the bulk-edit panel.
 \end{enumerate}
 
-Every field defaults to \textsf{--- No change ---}, so selecting four hundred products
+Every field defaults to \textsf{-- No change --}, so selecting four hundred products
 to set one value cannot silently blank the other two.
 
 \section{A practical order of work}
@@ -612,7 +612,7 @@ to set one value cannot silently blank the other two.
   \item Filter to the livestock shipping class and bulk-set \emph{Packing bag size} to
         \textsf{Standard}.
   \item Filter to the large-bagged species and bulk-set them to \textsf{Large}.
-  \item Bulk-set \emph{Units per packing bag} group by group --- shrimp and small
+  \item Bulk-set \emph{Units per packing bag} group by group: shrimp and small
         tetras at several per bag, cichlids and koi at one.
   \item Check the log (Chapter~\ref{ch:maintenance}) for any livestock product the
         plugin had to guess at.
@@ -661,8 +661,8 @@ produces exactly the same answer.
   \draw[dgflow] (rules.south) -- ++(0,-5mm) -| (rate.north);
   \draw[dgflow] (rules.south) -- ++(0,-5mm) -| (fees.north);
 \end{tikzpicture}
-\caption{The whole calculation. Steps 2, 3 and 4 are independent of one another ---
-none can affect the others' figures.}
+\caption{The whole calculation. Steps 2, 3 and 4 are independent of one another.
+None can affect the others' figures.}
 \label{fig:overview}
 \end{figure}
 
@@ -677,7 +677,7 @@ Before anything is priced, the delivery postcode is classified.
 \endhead
 \textbf{Outlying} & The postcode is on the outlying list.\\
 \textbf{Local} & The postcode is on the local list.\\
-\textbf{National} & Everything else --- a postcode on neither list, a blank postcode
+\textbf{National} & Everything else: a postcode on neither list, a blank postcode
 (as on the cart page before an address is entered), or an address outside the
 country.\\
 \bottomrule
@@ -706,7 +706,7 @@ Dry goods & Everything mapped to \opt{dry\_goods}. The bucket keeps a running su
 and a line count.\\
 \addlinespace
 Very large & Everything mapped to \opt{very\_large}. The bucket keeps a total
-\emph{quantity}, not a line count --- two of the same aquarium is two items.\\
+\emph{quantity}, not a line count. Two of the same aquarium is two items.\\
 \addlinespace
 Livestock & Everything mapped to a livestock meaning. Lines pointing at the same
 product are merged and their quantities summed \emph{before} any bag arithmetic.\\
@@ -764,11 +764,11 @@ The order qualifies only if \textbf{all three} are true:
         $\geq$ or $>$ is the \emph{exactly on the threshold} setting.)
   \item No shipping class in the cart is on the blocking list.
   \item No product in the cart is individually flagged as excluded from free shipping
-        --- either by its tickbox or by exceeding the weight limit.
+        , either by its tickbox or by exceeding the weight limit.
 \end{enumerate}
 
-If it does not qualify, the plugin also works out the \emph{shortfall} --- how much
-more merchandise would meet the threshold --- so the cart can tell the customer.
+If it does not qualify, the plugin also works out the \emph{shortfall}, how much
+more merchandise would meet the threshold, so the cart can tell the customer.
 
 \begin{figure}[H]
 \centering
@@ -804,7 +804,7 @@ more merchandise would meet the threshold --- so the cart can tell the customer.
 \begin{housewarn}
 Because livestock and very-large items are both on the blocking list by default, a
 \R{5\,000} order containing a single neon tetra does not earn free shipping. That is
-deliberate --- one bag of fish still costs a cooler box and a courier run. It is also
+deliberate: one bag of fish still costs a cooler box and a courier run. It is also
 stricter than a threshold that gates on order value alone, so it is worth confirming
 before go-live that this is the behaviour the shop wants customers to meet.
 \end{housewarn}
@@ -814,21 +814,21 @@ before go-live that this is the behaviour the shop wants customers to meet.
 If the dry-goods bucket has anything in it, two lines are produced:
 
 \begin{itemize}
-  \item \textbf{Dry-goods delivery} --- the flat rate. One charge for the whole bucket,
+  \item \textbf{Dry-goods delivery}: the flat rate. One charge for the whole bucket,
         not per item.
-  \item \textbf{Free-shipping discount} --- exactly minus the delivery charge if the
+  \item \textbf{Free-shipping discount}: exactly minus the delivery charge if the
         order qualifies, otherwise \R{0.00}.
 \end{itemize}
 
 Both lines appear even when the discount is zero, because
 \textsf{Free-shipping discount: R0.00} next to \textsf{Dry-goods delivery: R160.00}
-tells the customer something useful --- the discount exists and this order did not
+tells the customer something useful. The discount exists and this order did not
 earn it.
 
 The discount is always computed from the same delivery charge it cancels, never from
 a second setting, so the two can never drift apart.
 
-If the cart has \emph{no} dry goods in it --- a livestock-only order, say --- neither
+If the cart has \emph{no} dry goods in it (a livestock-only order, say), neither
 line appears at all. There is no dry-goods delivery to charge.
 
 \begin{figure}[H]
@@ -836,7 +836,7 @@ line appears at all. There is no dry-goods delivery to charge.
 \begin{tikzpicture}[node distance=8mm and 14mm]
   \node[dgask=40mm] (empty) {Is the dry-goods bucket empty?};
   \node[dgbox=44mm, right=of empty] (none)
-    {Nothing emitted at all --- not even a \R{0.00} line};
+    {Nothing emitted at all, not even a \R{0.00} line};
   \node[dgbox=44mm, below=of empty] (base)
     {\textbf{Dry-goods delivery} $=$ the flat rate};
   \node[dgask=52mm, below=of base] (qual) {Does the order qualify for free shipping?};
@@ -920,7 +920,7 @@ With the shipped defaults that is $\lceil (\textsf{standard} + \textsf{large} \t
 
 The box count and the heat-pack count are both recorded and displayed.
 
-An order with no cooler boxes produces no packaging lines at all --- not a pair of
+An order with no cooler boxes produces no packaging lines at all, not a pair of
 \R{0.00} lines. There is no packaging to account for, so there is nothing to say.
 
 \begin{figure}[H]
@@ -985,7 +985,7 @@ The three sets of charges are merged into one breakdown, in a fixed display orde
   \item Manual surcharge or adjustment
 \end{enumerate}
 
-Each line may appear at most once --- an attempt to add the same line twice is a hard
+Each line may appear at most once. An attempt to add the same line twice is a hard
 error rather than a silent double charge.
 
 Any flagged items are attached at this point, and so is a manual adjustment if one
@@ -997,14 +997,14 @@ has been set (see Section~\ref{sec:manual}).
 Two rules that act on the order as a whole, in this order:
 
 \textbf{1. Collection removes transport.} If the customer is collecting, every
-transport line is zeroed --- livestock delivery, dry-goods delivery, the very-large
+transport line is zeroed: livestock delivery, dry-goods delivery, the very-large
 charge, \emph{and} the free-shipping discount. Packaging is untouched and stays
 payable.
 
 \begin{houseinfo}
 The free-shipping discount is treated as transport for exactly this reason. If
 collection zeroed the \R{160} delivery but left a $-$\R{160} discount standing, a
-collected order would quote \emph{minus} \R{160} --- the shop paying the customer to
+collected order would quote \emph{minus} \R{160}, the shop paying the customer to
 come and fetch their own order.
 \end{houseinfo}
 
@@ -1041,7 +1041,7 @@ packaging.
   \draw[dgflow] (zero.south) -- ++(0,-5mm) -| ([xshift=15mm]free.north);
   \draw[dgflow] (zerop.south) -- ++(0,-5mm) -| ([xshift=15mm]total.north);
 \end{tikzpicture}
-\caption{Step 6. With the shipped default --- packaging stays payable --- the second
+\caption{Step 6. With the shipped default (packaging stays payable), the second
 rule never fires.}
 \label{fig:step6}
 \end{figure}
@@ -1056,7 +1056,7 @@ The result is split across two WooCommerce mechanisms, and the split matters:
 \midrule
 \endhead
 The \textbf{shipping rate} & Livestock delivery, dry-goods delivery, the very-large
-charge and the free-shipping discount --- added together into one figure.\\
+charge and the free-shipping discount, added together into one figure.\\
 \addlinespace
 \textbf{Cart fees} & The cooler-box charge, the heat-pack charge and any manual
 adjustment, each as its own line.\\
@@ -1177,7 +1177,7 @@ Merchandise subtotal & \R{775.00}\\
 \end{center}
 
 If the same customer switched to collection, the \R{600.00} would become \R{0.00} and
-the \R{60.00} cooler-box fee would remain --- an order total of \R{835.00}.
+the \R{60.00} cooler-box fee would remain, for an order total of \R{835.00}.
 
 % =============================================================================
 \chapter{What customers and staff see}
@@ -1189,8 +1189,8 @@ the \R{60.00} cooler-box fee would remain --- an order total of \R{835.00}.
 Up to two options are offered: the courier option and, if enabled, the collection
 option. Both are labelled from the settings.
 
-If the cart contains anything that cannot be couriered --- a collection-only item, or
-livestock the shop cannot currently ship --- then the \textbf{courier option is
+If the cart contains anything that cannot be couriered, a collection-only item or
+livestock the shop cannot currently ship, then the \textbf{courier option is
 withheld entirely} and collection is offered even if it is normally switched off, so
 the customer still has a way to complete the order. Quoting a courier price for an
 order that cannot go on a courier, and discovering it after payment, is the failure
@@ -1228,7 +1228,7 @@ the \textbf{classic} shortcode cart and checkout pages. It does \textbf{not} wor
 the newer \textbf{block} cart and checkout, which render their own notices and
 discard informational ones added this way.
 
-Pricing is completely unaffected --- this is display only. If the store uses block
+Pricing is completely unaffected: this is display only. If the store uses block
 checkout pages and the notices are needed, supporting them means shipping a small
 JavaScript bundle through the WooCommerce Blocks integration API. See
 Chapter~\ref{ch:limits}.
@@ -1246,7 +1246,7 @@ Only components that add something are shown. Specifically:
 \begin{itemize}
   \item Zero-value lines are omitted.
   \item Packaging and manual adjustments are omitted, because they are already real
-        fee line items that WooCommerce prints itself --- printing them again would
+        fee line items that WooCommerce prints itself, and printing them again would
         say \textsf{Cooler-box charge: R60.00} twice.
   \item If only \emph{one} transport component remains, nothing is shown at all: one
         line on its own is just WooCommerce's own \textsf{Shipping} row under a
@@ -1258,7 +1258,7 @@ The cooler-box, heat-pack and very-large-item \emph{counts} are shown alongside.
 \subsection{The shop's view}
 
 The same breakdown appears on the order edit screen in wp-admin, under the shipping
-total, plus one extra row --- \textsf{Needs attention} --- listing any flagged items.
+total, plus one extra row, \textsf{Needs attention}, listing any flagged items.
 
 The plugin also adds \textbf{order notes} for anything a person has to act on:
 
@@ -1285,7 +1285,7 @@ Go to the settings screen, change the figure, save. That is the whole procedure.
 Every rate is in exactly one place, so a rate can never drift out of step with a copy
 of itself.
 
-Existing orders are unaffected --- they keep the figures they were charged.
+Existing orders are unaffected. They keep the figures they were charged.
 
 \begin{housewarn}
 Remember the figure you type excludes VAT. If shipping is taxable on this store, the
@@ -1302,7 +1302,7 @@ and set the start and end to \opt{MM-DD} values. The manual tickbox is then igno
 
 \section{Adjusting the local delivery area}
 
-Edit the \emph{Local delivery postcodes} box. Use ranges wherever possible --- a
+Edit the \emph{Local delivery postcodes} box. Use ranges wherever possible. A
 textarea holding several hundred four-digit numbers is a setting nobody maintains
 correctly.
 
@@ -1322,7 +1322,7 @@ the conflicting entries are named.
 
 \section{Reading the log}
 
-When the plugin has to guess at something, it says so --- without ever interrupting a
+When the plugin has to guess at something, it says so, without ever interrupting a
 checkout. Warnings go to:
 
 \begin{center}
@@ -1362,7 +1362,7 @@ the log stays readable.
 To reproduce a figure a customer was quoted:
 
 \begin{enumerate}
-  \item Open the order and read the stored breakdown --- it records exactly what was
+  \item Open the order and read the stored breakdown, which records exactly what was
         charged.
   \item If the order looks wrong, rebuild the same cart on the front end and compare.
   \item If the two differ, a setting or a product's data has changed since the order
@@ -1379,7 +1379,7 @@ To reproduce a figure a customer was quoted:
 
 Deleting the plugin through wp-admin does not remove its settings or any order data,
 so settings survive an upgrade. Adding a setting in a later version does not break an
-existing install --- an unsaved new setting simply uses its default.
+existing install. An unsaved new setting simply uses its default.
 
 % =============================================================================
 \chapter{Troubleshooting}
@@ -1424,7 +1424,7 @@ Add the class to \emph{Shipping types that block free shipping}, or tick the pro
 \addlinespace
 The courier option has vanished. &
 The cart contains a collection-only or livestock-unavailable item. &
-This is intended. The customer is shown the reason via the notice --- unless the site
+This is intended. The customer is shown the reason via the notice, unless the site
 uses block checkout.\\
 \addlinespace
 Notices never appear. &
@@ -1441,7 +1441,7 @@ Intended. The WooCommerce \textsf{Shipping} row already shows that figure.\\
 \addlinespace
 The whole shop is suddenly quoting default prices. &
 A saved setting is invalid, so the plugin fell back to defaults. &
-Open the settings screen --- it names the violation --- and check the log.\\
+Open the settings screen, which names the violation, and check the log.\\
 \addlinespace
 Two collection options are shown. &
 Both this plugin's collection option and WooCommerce Local Pickup are enabled. &
@@ -1453,7 +1453,7 @@ Turn off one of them. See Section~\ref{sec:collection-clash}.\\
 \chapter{Known limitations and open decisions}
 \label{ch:limits}
 
-Everything in this chapter works as described --- these are places where a decision
+Everything in this chapter works as described. These are places where a decision
 has been made on the shop's behalf and is worth confirming, or where a known gap
 exists.
 
@@ -1468,7 +1468,7 @@ Does exactly \R{2\,500} qualify for free shipping? &
 Yes, inclusive. Reversible with one tickbox.\\
 \addlinespace
 Should packaging appear as money on the invoice? &
-Yes --- two lines, \textsf{Cooler-box charge} and \textsf{Heat-pack charge}. Without
+Yes: two lines, \textsf{Cooler-box charge} and \textsf{Heat-pack charge}. Without
 them, packaging money appears in the total with nothing accounting for it.\\
 \addlinespace
 Is free shipping automatic or opt-in? &
@@ -1501,9 +1501,9 @@ the rule off entirely.\\
     needs this set before its packaging can be quoted accurately.
   \item[A local tier for dry goods and very-large items.] Only livestock has a
     local rate. If a cheaper local rate is wanted for the other two, it is a settings
-    change plus one line of code --- no change to the pricing logic.
+    change plus one line of code, with no change to the pricing logic.
   \item[The shipping-class slugs.] The seeded translation list has to be checked
-    against the slugs the store really uses. A wrong slug does not error --- those
+    against the slugs the store really uses. A wrong slug does not error. Those
     products silently fall through to the unclassified default.
   \item[Notices on the block cart and checkout.] Section~\ref{sec:blocknotice}. This
     matters the day anybody rebuilds those pages with blocks.
@@ -1513,7 +1513,7 @@ the rule off entirely.\\
 \label{sec:collection-clash}
 
 The plugin offers its own collection option, and it also recognises WooCommerce's
-built-in Local Pickup as collection --- both correctly remove transport while keeping
+built-in Local Pickup as collection, and both correctly remove transport while keeping
 packaging payable.
 
 If both are configured, customers see two collection options. Pick one: either untick
@@ -1566,7 +1566,7 @@ over both trees, and \opt{phpunit}. They can be run individually as \opt{compose
 \opt{composer stan} and \opt{composer test}.
 
 PHPStan uses two configurations. One covers the engine; the other covers the adapter
-and loads the WordPress and WooCommerce stubs. The split is deliberate --- the stubs
+and loads the WordPress and WooCommerce stubs. The split is deliberate: the stubs
 are deliberately \emph{not} available to the engine, which is what makes ``no
 WordPress code in the engine'' something a tool can verify rather than a habit.
 
@@ -1579,7 +1579,7 @@ WordPress code in the engine'' something a tool can verify rather than a habit.
         count go through it, and it refuses floats outright.
   \item \textbf{Rates are VAT-exclusive.} VAT is WooCommerce's job.
   \item \textbf{Purity.} The same cart plus the same settings always produces an
-        identical quote. There is no clock in the engine --- heat-pack season is
+        identical quote. There is no clock in the engine: heat-pack season is
         resolved to a yes or no at the boundary, before the engine is built.
   \item \textbf{The transport/packaging split follows the cost line's own definition},
         not a hand-maintained list. A new cost line lands on whichever side its
@@ -1590,7 +1590,7 @@ WordPress code in the engine'' something a tool can verify rather than a habit.
 \label{sec:manual}
 
 The breakdown supports a \textsf{Manual surcharge or adjustment} line, but no pricing
-rule produces one --- it is a human decision about a specific order. Something else
+rule produces one: it is a human decision about a specific order. Something else
 can set it through a filter, in integer cents:
 
 \begin{lstlisting}[language=PHP]
@@ -1608,7 +1608,7 @@ At version 0.1.0 the plugin has been exercised in two ways:
 
 \begin{itemize}
   \item An \textbf{automated suite} covering the engine, the adapter's cart mapping,
-        the settings parsing and a set of end-to-end pipeline scenarios --- including
+        the settings parsing and a set of end-to-end pipeline scenarios, including
         the worked examples reproduced in Chapter~\ref{ch:calc}.
   \item A \textbf{27-scenario manual test round} against a staging store with a real
         product catalogue, covering every shipping class, both fulfilment choices,
@@ -1733,7 +1733,7 @@ disqualifies the whole order from free shipping.\\
 large, livestock, flagged.\\
 \textbf{Cooler box} & An insulated box holding several bags. Charged per box.\\
 \textbf{Cost line} & One named component of the shipping figure.\\
-\textbf{Flagged item} & An item carrying a restriction rather than a price ---
+\textbf{Flagged item} & An item carrying a restriction rather than a price:
 collection-only, quote-required, or livestock-unavailable.\\
 \textbf{Fulfilment} & Whether the order is couriered or collected.\\
 \textbf{Gross merchandise value} & The value of everything in the cart before coupon
@@ -1753,7 +1753,7 @@ it. Removed by collection; packaging is not.\\
 \vspace{2cm}
 \begin{center}
 {\color{accent}\rule{6cm}{1pt}}\\[8pt]
-{\sffamily\footnotesize\color{muted}Riverbend Shipping 0.1.0 --- End of manual}
+{\sffamily\footnotesize\color{muted}Riverbend Shipping 0.1.0 \textbullet\ End of manual}
 \end{center}
 
 \end{document}
