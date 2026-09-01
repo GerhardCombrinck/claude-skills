@@ -51,18 +51,18 @@ callouts, captioned figures, cross-references.
 ### A full-length manual
 
 [`examples/manual/shipping-manual.tex`](examples/manual/shipping-manual.tex) is a
-38-page software manual in the same house style: title page, table of contents, ten
+41-page software manual in the same house style: title page, table of contents, ten
 chapters and three appendices (the last of them a glossary), seven TikZ diagrams,
-22 `longtable` reference tables that break across pages, five code listings and
-resolved cross-references throughout.
+six annotated screenshots, 22 `longtable` reference tables that break across pages,
+five code listings and resolved cross-references throughout.
 
 <p align="center">
   <a href="https://gerhardcombrinck.github.io/claude-skills/examples/manual/shipping-manual.pdf"><img src="docs/images/manual-title.png" width="32%" alt="Manual title page: rule, title, subtitle, and a metadata table"></a>
+  <a href="https://gerhardcombrinck.github.io/claude-skills/examples/manual/shipping-manual.pdf"><img src="docs/images/manual-shot.png" width="32%" alt="A settings screenshot with two highlight bands and side labels joined by leader lines"></a>
   <a href="https://gerhardcombrinck.github.io/claude-skills/examples/manual/shipping-manual.pdf"><img src="docs/images/manual-diagram.png" width="32%" alt="Chapter opening page with a six-step flowchart built from the diagram kit"></a>
-  <a href="https://gerhardcombrinck.github.io/claude-skills/examples/manual/shipping-manual.pdf"><img src="docs/images/manual-tables.png" width="32%" alt="Worked-example page: two itemised booktabs tables with money columns and inline arithmetic"></a>
 </p>
 
-**[Open the full 38-page PDF](https://gerhardcombrinck.github.io/claude-skills/examples/manual/shipping-manual.pdf)** — or click any page above.
+**[Open the full 41-page PDF](https://gerhardcombrinck.github.io/claude-skills/examples/manual/shipping-manual.pdf)** — or click any page above.
 
 It shows the two things a long document needs beyond what `house.tex` ships, and both
 are done in the document rather than by editing the shared style:
@@ -74,7 +74,17 @@ are done in the document rather than by editing the shared style:
   `dgstub` and `dgtag`. The manual adds a green `dgout` for output nodes, built from
   the house palette rather than from a new colour.
 
-The company, product, rates, postcodes and catalogue in it are invented.
+Its six screenshots are annotated with the `shot*` kit
+([`SCREENSHOTS.md`](plugins/gc-skills/skills/latex/SCREENSHOTS.md)), three with side
+labels and leaders and three with numbered badges and a key. The screens themselves are
+mockups: [`examples/manual/mockups/screens.html`](examples/manual/mockups/screens.html)
+holds the markup, `capture.py` shoots each one as a CSS selector at 2x, and
+`measure.py` reads the highlight-band coordinates off the resulting PNG so none of them
+were guessed. Editing a value in the HTML and re-running the two scripts is the whole
+update path for a figure.
+
+The company, product, rates, postcodes and catalogue in it are invented, and no real
+application was captured.
 
 Build them yourself, from a clone of this repo:
 

@@ -98,8 +98,8 @@ Points to note:
 \end{figure}
 
 \vspace{-8pt}
-\begin{description}[leftmargin=0pt,itemsep=1pt,parsep=0pt,topsep=2pt,
-                    font=\normalfont]
+\begin{description}[leftmargin=1.6em,labelindent=0pt,itemsep=2pt,parsep=0pt,
+                    topsep=2pt,font=\normalfont]
   \item \shotkey{1} \textbf{The shipping row}, the transport components added together.
   \item \shotkey{2} \textbf{The breakdown}, shown only when there is more than one.
 \end{description}
@@ -113,6 +113,9 @@ Points to note:
   floats away from the figure it belongs to.
 - `font=\normalfont` on the `description` stops the badge inheriting a bold label font
   and rendering at the wrong weight.
+- `leftmargin` must leave room for the badge. At `0pt` the first line indents but every
+  wrapped line falls back to the margin, so a two-line entry looks broken. `1.6em`
+  hangs the text under itself.
 
 ## Placing bands by measurement, not by eye
 

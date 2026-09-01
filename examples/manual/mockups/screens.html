@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Riverbend Shipping — mock screens for the manual figures</title>
+<!--
+  Mock interfaces for the manual's screenshots. Entirely invented: there is no
+  Riverbend Aquatics, and no real store was captured.
+
+  capture.py shoots each #id below as a CSS selector at 2x, which is the recipe
+  SCREENSHOTS.md documents. Editing a value here and re-running the capture is
+  the whole update path for a figure.
+-->
+<style>
+  :root {
+    --ink: #1d2327; --muted: #646970; --line: #dcdcde;
+    --field: #ffffff; --head: #f6f7f7; --stripe: #fbfbfc;
+    --blue: #2271b1; --green: #00734a; --amber: #8a6100;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 28px; background: #f0f0f1; color: var(--ink);
+    font: 14px/1.5 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  /* Kept deliberately narrow. A 900px-wide capture placed at 0.58\linewidth
+     renders its body text at about 4pt, which no reader will thank you for.
+     At this width the same placement lands near 7.5pt. */
+  .screen {
+    background: #fff; border: 1px solid var(--line); border-radius: 3px;
+    padding: 0; margin: 0 0 34px; max-width: 520px;
+  }
+  .screen > h2 {
+    margin: 0; padding: 10px 14px; font-size: 14px; font-weight: 600;
+    border-bottom: 1px solid var(--line); background: var(--head);
+  }
+  table.form { width: 100%; border-collapse: collapse; }
+  table.form th {
+    width: 46%; text-align: left; vertical-align: top; font-weight: 600;
+    padding: 12px 10px 12px 14px;
+  }
+  table.form td { padding: 10px 14px 10px 0; }
+  table.form tr + tr th, table.form tr + tr td { border-top: 1px solid #f0f0f1; }
+  input[type=text], select, textarea {
+    font: inherit; padding: 5px 8px; border: 1px solid #8c8f94;
+    border-radius: 3px; background: var(--field); color: var(--ink);
+  }
+  input.short { width: 78px; } input.mid { width: 150px; } input.long { width: 230px; }
+  textarea { width: 230px; height: 54px; resize: none; }
+  .hint { display: block; color: var(--muted); font-size: 12.5px; margin-top: 5px; }
+  label.cb { display: block; margin: 2px 0; }
+
+  table.data { width: 100%; border-collapse: collapse; }
+  table.data th, table.data td { padding: 9px 14px; text-align: left; }
+  table.data thead th { border-bottom: 2px solid var(--line); font-weight: 600; }
+  table.data tbody tr { border-bottom: 1px solid #f0f0f1; }
+  table.data tbody tr:nth-child(even) { background: var(--stripe); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .tot td { font-weight: 700; border-top: 2px solid var(--line); }
+  .sub { color: var(--muted); font-size: 12.5px; }
+
+  .notice {
+    border-left: 4px solid var(--blue); background: #f0f6fc;
+    padding: 11px 14px; margin: 0;
+  }
+  .pill {
+    display: inline-block; padding: 1px 8px; border-radius: 9px;
+    font-size: 12px; font-weight: 600;
+  }
+  .pill.warn { background: #fcf3e3; color: var(--amber); }
+  .pill.ok { background: #edf7f2; color: var(--green); }
+  code { font: 12.5px/1.4 ui-monospace, Consolas, monospace; }
+</style>
+</head>
+<body>
+
+<!-- ============================================= settings: shipping rates -->
+<div class="screen" id="rates">
+  <h2>Shipping rates</h2>
+  <table class="form">
+    <tr><th>Local livestock delivery</th>
+      <td>R <input class="short" type="text" value="120.00">
+        <span class="hint">Livestock delivery to a postcode on the local list.</span></td></tr>
+    <tr><th>Livestock delivery elsewhere</th>
+      <td>R <input class="short" type="text" value="280.00">
+        <span class="hint">Anywhere else, including outlying addresses.</span></td></tr>
+    <tr><th>Normal dry-goods delivery</th>
+      <td>R <input class="short" type="text" value="160.00">
+        <span class="hint">One flat charge for the whole dry-goods part of the order.</span></td></tr>
+    <tr><th>Very large product delivery</th>
+      <td>R <input class="short" type="text" value="320.00">
+        <span class="hint">Charged per very-large item, instead of the dry-goods rate.</span></td></tr>
+  </table>
+</div>
+
+<!-- ================================================ settings: packaging -->
+<div class="screen" id="packaging">
+  <h2>Cooler boxes and heat packs</h2>
+  <table class="form">
+    <tr><th>Standard bags per cooler box</th>
+      <td><input class="short" type="text" value="4"></td></tr>
+    <tr><th>Space used by a large bag</th>
+      <td><input class="short" type="text" value="2">
+        <span class="hint">In standard-bag places.</span></td></tr>
+    <tr><th>Charge per cooler box</th>
+      <td>R <input class="short" type="text" value="60.00"></td></tr>
+    <tr><th>Charge per heat pack</th>
+      <td>R <input class="short" type="text" value="25.00"></td></tr>
+    <tr><th>Heat-pack season</th>
+      <td><select><option>Switch on and off by hand</option>
+        <option>Between two dates each year</option></select></td></tr>
+    <tr><th>Heat-pack season is on now</th>
+      <td><label class="cb"><input type="checkbox"> Currently in season</label></td></tr>
+    <tr><th>Season starts / ends</th>
+      <td><input class="short" type="text" value="05-01">
+        to <input class="short" type="text" value="08-31">
+        <span class="hint">Only consulted in date mode.</span></td></tr>
+  </table>
+</div>
+
+<!-- ============================================= product shipping fields -->
+<div class="screen" id="product">
+  <h2>Product data &rsaquo; Shipping</h2>
+  <table class="form">
+    <tr><th>Units per packing bag</th>
+      <td><input class="short" type="text" value="3">
+        <span class="hint">How many of this product ship in one bag.</span></td></tr>
+    <tr><th>Packing bag size</th>
+      <td><select><option>Standard</option><option>Large</option></select></td></tr>
+    <tr><th>Excluded from free shipping</th>
+      <td><label class="cb"><input type="checkbox"> Never earns free delivery</label></td></tr>
+  </table>
+</div>
+
+<!-- ============================================================ cart totals -->
+<div class="screen" id="cart">
+  <h2>Cart totals</h2>
+  <table class="data">
+    <tbody>
+      <tr><td>Subtotal</td><td class="num">R3&thinsp;590.00</td></tr>
+      <tr><td>Courier delivery<br>
+        <span class="sub">Livestock delivery R280.00 &middot; Dry-goods delivery R160.00
+        &middot; Very-large-item charge R640.00 &middot; Free-shipping discount R0.00</span></td>
+        <td class="num">R1&thinsp;080.00</td></tr>
+      <tr><td>Cooler-box charge (2 &times; R60.00)</td><td class="num">R120.00</td></tr>
+      <tr><td>Heat-pack charge (2 &times; R25.00)</td><td class="num">R50.00</td></tr>
+      <tr class="tot"><td>Total</td><td class="num">R4&thinsp;840.00</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================ cart notice -->
+<div class="screen" id="notice">
+  <p class="notice"><strong>Dispatch days.</strong> Livestock and plants are dispatched
+  Monday to Wednesday only. Dry goods are normally dispatched Monday to Friday.
+  Couriers do not normally operate over weekends. Mixed orders may be split into
+  separate livestock and dry-goods consignments.</p>
+</div>
+
+<!-- ====================================================== order breakdown -->
+<div class="screen" id="order">
+  <h2>Order #140</h2>
+  <table class="data">
+    <tbody>
+      <tr><td>Subtotal</td><td class="num">R3&thinsp;590.00</td></tr>
+      <tr><td>Shipping</td><td class="num">R1&thinsp;080.00</td></tr>
+      <tr><td><span class="sub">Livestock delivery</span></td>
+          <td class="num sub">R280.00</td></tr>
+      <tr><td><span class="sub">Dry-goods delivery</span></td>
+          <td class="num sub">R160.00</td></tr>
+      <tr><td><span class="sub">Very-large-item charge</span></td>
+          <td class="num sub">R640.00</td></tr>
+      <tr><td><span class="sub">Cooler boxes 2 &middot; Heat packs 2 &middot; Very-large items 2</span></td>
+          <td class="num sub"></td></tr>
+      <tr><td>Cooler-box charge (2 &times; R60.00)</td><td class="num">R120.00</td></tr>
+      <tr><td>Heat-pack charge (2 &times; R25.00)</td><td class="num">R50.00</td></tr>
+      <tr class="tot"><td>Total</td><td class="num">R4&thinsp;840.00</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- =============================================================== the log -->
+<div class="screen" id="log">
+  <h2>Status &rsaquo; Logs &rsaquo; source riverbend-shipping</h2>
+  <table class="data">
+    <thead><tr><th>Level</th><th>Message</th><th>Time</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill warn">warning</span></td>
+        <td>&ldquo;Cherry shrimp&rdquo; is livestock but has no units-per-bag set.
+            Assuming 1 per bag</td><td class="sub">09:14</td></tr>
+      <tr><td><span class="pill warn">warning</span></td>
+        <td>&ldquo;Assorted angelfish&rdquo; is livestock but has no packing-bag size set</td>
+        <td class="sub">09:14</td></tr>
+      <tr><td><span class="pill ok">info</span></td>
+        <td>Settings validated, 24 options loaded</td><td class="sub">08:02</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>

@@ -319,6 +319,26 @@ the other two, it is a settings change plus one line of code, with no change to 
 pricing logic itself.
 \end{houseinfo}
 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+  \shotimg{0.64}{settings-rates.png}
+  \begin{shotscope}
+    \hilite{0.008}{0.494}{0.992}{0.995}
+    \hilite{0.008}{0.024}{0.992}{0.260}
+    \pt{a}{0.992}{0.745}
+    \pt{b}{0.992}{0.142}
+  \end{shotscope}
+  \sidelbl{l1}{11mm}{13mm}{33mm}{Two livestock rates, chosen by \textbf{postcode}.}
+  \sidelbl{l2}{11mm}{-13mm}{33mm}{Charged \textbf{per item}, instead of the dry-goods rate.}
+  \leadto{l1}{a}
+  \leadto{l2}{b}
+\end{tikzpicture}
+\caption{Every field here excludes VAT, including the two you may be used to
+quoting inclusive.}
+\label{fig:settings-rates}
+\end{figure}
+
 \section{Free shipping}
 
 \begin{longtable}{@{}L{5.0cm}L{2.6cm}L{7.0cm}@{}}
@@ -378,6 +398,28 @@ Season ends (MM-DD) & \opt{08-31} & Only consulted in date mode.\\
 Packaging stays payable when transport is free & \yes & Untick only if a free-transport order should also stop paying for its cooler boxes.\\
 \bottomrule
 \end{longtable}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+  \shotimg{0.60}{settings-packaging.png}
+  \begin{shotscope}
+    \hilite{0.008}{0.618}{0.992}{0.995}
+    \hilite{0.008}{0.393}{0.992}{0.618}
+    \hilite{0.008}{0.022}{0.992}{0.393}
+    \pt{a}{0.992}{0.807}
+    \pt{b}{0.992}{0.505}
+    \pt{c}{0.992}{0.207}
+  \end{shotscope}
+  \sidelbl{l1}{11mm}{22mm}{32mm}{The capacity maths: bags per box, and what a large bag costs in space.}
+  \sidelbl{l2}{11mm}{0mm}{32mm}{What the customer pays, per box and per pack.}
+  \sidelbl{l3}{11mm}{-22mm}{32mm}{The season. In \emph{by hand} mode the two dates are ignored.}
+  \leadto{l1}{a}\leadto{l2}{b}\leadto{l3}{c}
+\end{tikzpicture}
+\caption{Packaging applies to livestock orders whether or not a courier is
+involved, collection included.}
+\label{fig:settings-packaging}
+\end{figure}
 
 \subsection{The two season modes}
 
@@ -556,6 +598,25 @@ Packing bag size & Livestock only & \textsf{Standard} or \textsf{Large}. A large
 Excluded from free shipping & Any product & This product never counts towards free shipping and disqualifies the whole order, whatever it is worth.\\
 \bottomrule
 \end{longtable}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+  \shotimg{0.62}{product-fields.png}
+  \begin{shotscope}
+    \hilite{0.008}{0.203}{0.992}{0.995}
+    \hilite{0.008}{0.006}{0.992}{0.203}
+    \pt{a}{0.992}{0.599}
+    \pt{b}{0.992}{0.105}
+  \end{shotscope}
+  \sidelbl{l1}{11mm}{9mm}{32mm}{Livestock only. Blank on anything else.}
+  \sidelbl{l2}{11mm}{-11mm}{32mm}{Any product, and it disqualifies the whole order.}
+  \leadto{l1}{a}
+  \leadto{l2}{b}
+\end{tikzpicture}
+\caption{The three fields the plugin adds, on a livestock product.}
+\label{fig:product-fields}
+\end{figure}
 
 \subsection{What happens when they are not set}
 
@@ -1215,6 +1276,38 @@ than one, the count is put in the label so the customer can check the arithmetic
 \textsf{Cooler-box charge (2 x R60.00)}\hspace{2em}\textsf{R120.00}
 \end{center}
 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+  \shotimg{0.70}{cart-totals.png}
+  \begin{shotscope}
+    \hilite{0.008}{0.441}{0.992}{0.676}
+    \hilite{0.008}{0.327}{0.992}{0.441}
+    \hilite{0.008}{0.212}{0.992}{0.327}
+    \hilite{0.008}{0.034}{0.992}{0.212}
+    \shotbadgeat{0.558}{1}
+    \shotbadgeat{0.384}{2}
+    \shotbadgeat{0.269}{3}
+    \shotbadgeat{0.123}{4}
+  \end{shotscope}
+\end{tikzpicture}
+\caption{The cart, for the mixed order worked through in
+Chapter~\ref{ch:calc}.}
+\label{fig:cart-totals}
+\end{figure}
+
+\vspace{-8pt}
+\begin{description}[leftmargin=1.6em,labelindent=0pt,itemsep=2pt,parsep=0pt,
+                    topsep=2pt,font=\normalfont]
+  \item \shotkey{1} \textbf{The shipping rate}, with its components listed
+    underneath because more than one of them fired.
+  \item \shotkey{2} \textbf{The cooler-box fee}, carrying its count so the
+    customer can check the arithmetic.
+  \item \shotkey{3} \textbf{The heat-pack fee}, present only because the season
+    is on.
+  \item \shotkey{4} \textbf{The total}, transport and packaging together.
+\end{description}
+
 \subsection{The notices}
 
 Up to four notices are shown on the cart, in this order: the dispatch-day notice
@@ -1254,6 +1347,39 @@ Only components that add something are shown. Specifically:
 \end{itemize}
 
 The cooler-box, heat-pack and very-large-item \emph{counts} are shown alongside.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+  \shotimg{0.70}{order-breakdown.png}
+  \begin{shotscope}
+    \hilite{0.008}{0.682}{0.992}{0.778}
+    \hilite{0.008}{0.393}{0.992}{0.682}
+    \hilite{0.008}{0.296}{0.992}{0.393}
+    \hilite{0.008}{0.104}{0.992}{0.296}
+    \shotbadgeat{0.730}{1}
+    \shotbadgeat{0.537}{2}
+    \shotbadgeat{0.345}{3}
+    \shotbadgeat{0.200}{4}
+  \end{shotscope}
+\end{tikzpicture}
+\caption{The same order on the order-received page. The identical rows appear
+in the confirmation email.}
+\label{fig:order-breakdown}
+\end{figure}
+
+\vspace{-8pt}
+\begin{description}[leftmargin=1.6em,labelindent=0pt,itemsep=2pt,parsep=0pt,
+                    topsep=2pt,font=\normalfont]
+  \item \shotkey{1} \textbf{The shipping row}, the transport components added
+    together. The plugin does not print this one.
+  \item \shotkey{2} \textbf{The breakdown the plugin adds}, shown only because
+    this order has more than one transport charge.
+  \item \shotkey{3} \textbf{Counts, not money.} They explain the figures rather
+    than adding to the total.
+  \item \shotkey{4} \textbf{Cart fees}, printed by WooCommerce itself, which is
+    why the plugin does not repeat them.
+\end{description}
 
 \subsection{The shop's view}
 
@@ -1356,6 +1482,23 @@ default prices. Open the settings screen; it will name the problem.\\
 
 Each distinct message is logged once per page load rather than once per cart line, so
 the log stays readable.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+  \shotimg{0.64}{admin-log.png}
+  \begin{shotscope}
+    \hilite{0.008}{0.195}{0.992}{0.655}
+    \pt{a}{0.992}{0.425}
+  \end{shotscope}
+  \sidelbl{l1}{11mm}{2mm}{32mm}{Each warning names the product, so the fix is a
+  product edit rather than a hunt.}
+  \leadto{l1}{a}
+\end{tikzpicture}
+\caption{Warnings are filed under the source \opt{riverbend-shipping}. The
+plugin never interrupts a checkout to report one.}
+\label{fig:admin-log}
+\end{figure}
 
 \section{Checking a quote by hand}
 
